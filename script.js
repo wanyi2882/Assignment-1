@@ -42,30 +42,34 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     document.querySelector("#submit-btn").addEventListener('click', async function(){
 
-        let redIcon = new L.Icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
-          });
-          
+        // let redIcon = new L.Icon({
+        //     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        //     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        //     iconSize: [25, 41],
+        //     iconAnchor: [12, 41],
+        //     popupAnchor: [1, -34],
+        //     shadowSize: [41, 41]
+        //   });
+        let allPages = document.querySelectorAll('.page');
+        for (let p of allPages) {
+            p.classList.remove('show');
+            p.classList.add('hidden');
+        }
+    
+        // only show page 1
+        document.querySelector('#map').classList.add('show');
+
         let searchTerms = document.querySelector("#postal-code").value;
         let response = await axios.get("https://geocode.xyz/" + searchTerms + "?json=1");
         let currentLat = response.data.latt;
         let currentLng = response.data.longt;
         let currentCoordinates = [currentLat, currentLng];
-        let currentMarker = L.marker(currentCoordinates, {icon: redIcon});
-        currentMarker.addTo(map);
+        map.flyTo(currentCoordinates, 18)
 
         let popup = L.popup();
         popup.setLatLng(currentCoordinates);
         popup.setContent(`YOU ARE HERE!`);
         popup.openOn(map);
-
-        let zoom = 20;
-        map.setView(currentCoordinates, zoom);
     })
 });
 

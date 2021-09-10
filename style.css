@@ -1,4 +1,40 @@
+.main-image{
+  background-image: url("../images/main-image.jpeg");
+  height: 100vh;
+  width:100vw;
+  background-size:cover;
+  background-position:center;
+
+  display: flex;
+  align-items: center;
+}
+
+.overlay{
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0,0,0,0.3);
+}
+
 #map{
-    height: 600px;
+    height: 100vh;
+    width: 100vw;
     border: 1px solid black;
   }
+
+#container{
+  position:relative;
+}
+
+.hidden {
+    /* transition: transform 1s; */
+    transform: translateX(-100%);
+}
+
+.show {
+  transition: transform 1s;
+  transform: translateX(0);
+}
+
+.page{
+  position:absolute;
+}
