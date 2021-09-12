@@ -24,7 +24,15 @@ window.addEventListener("DOMContentLoaded", async function () {
     let clusters = L.markerClusterGroup();
     clusters.addTo(map);
 
+    //load CSV data
+    let rawData = await loadCentresData();
+
+
+
+
+
     for (let feature of features) {
+
         let lat = feature.geometry.coordinates[1];
         let lng = feature.geometry.coordinates[0];
         let locations = [lat, lng];
@@ -32,31 +40,42 @@ window.addEventListener("DOMContentLoaded", async function () {
 
         marker.addTo(clusters);
 
-        let names = document.createElement('div')
-        names.innerHTML = feature.properties.Description;
+        let popupDiv = document.createElement('div')
+        popupDiv.innerHTML = feature.properties.Description;
 
-        let specific = names.querySelectorAll('td');
+        let centreName = popupDiv.querySelectorAll('td');
+        let centreCode = popupDiv.querySelectorAll('td')[1];
+        let address = popupDiv.querySelectorAll('td')[2];
+        //console.log(centreCode);
 
-        marker.bindPopup(`${specific[0].innerHTML}`);
+        for (let csvCentreData of rawData){
+            if (csvCentreData.centre_code.includes(centreCode.innerHTML)){
+                //console.log(csvCentreData.centre_name);
+                x = csvCentreData.centre_name
+                y = csvCentreData.spark_certified
+                z = csvCentreData.centre_address
+            }
+        }
+
+        let popupContent = `
+        Centre Name: ${x} <br>
+        spark_certified: ${y}<br>
+        Address: ${z}`;
+        let popupOptions =
+        {'minWidth': '500'}
+
+        marker.bindPopup(popupContent, popupOptions);
     }
 
     document.querySelector("#submit-btn").addEventListener('click', async function(){
 
-        // let redIcon = new L.Icon({
-        //     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-        //     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        //     iconSize: [25, 41],
-        //     iconAnchor: [12, 41],
-        //     popupAnchor: [1, -34],
-        //     shadowSize: [41, 41]
-        //   });
         let allPages = document.querySelectorAll('.page');
         for (let p of allPages) {
             p.classList.remove('show');
             p.classList.add('hidden');
         }
     
-        // only show page 1
+        // only show map page
         document.querySelector('#map').classList.add('show');
 
         let searchTerms = document.querySelector("#postal-code").value;
@@ -71,6 +90,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         popup.setContent(`YOU ARE HERE!`);
         popup.openOn(map);
     })
+
 });
 
 

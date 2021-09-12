@@ -27,21 +27,25 @@
         <div id="page-one" class="page main-image">
             <div class="overlay d-flex">
                 <div class="d-flex align-items-center">
-                    <input type="text" id="postal-code" />
+                    <input type="text" id="postal-code" placeholder="Enter your postal code here"/>
                     <button id="submit-btn">submit</button>
+                    <div id="details"></div>
                 </div>
             </div>
         </div>
         <!-- end of hero -->
 
         <!-- div will contain map -->
-        <div id="map" class="page hidden"></div>
+        <div id="map" class="custom-popup page hidden"></div>
     </div>
 
     <!-- axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
         integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- csv cdn -->
+    <script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
 
     <!-- leaflet javascript -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -54,6 +58,9 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+    <!-- csv data javascript -->
+    <script src="data.js"></script>
+    
     <!-- custom script -->
     <script src="script.js"></script>
 </body>
