@@ -21,7 +21,7 @@ width: 100vw;
 }
 
 #map{
-    height: 100vh;
+    height: 60vh;
     width: 100vw;
     border: 1px solid black;
   }
@@ -63,5 +63,10 @@ width: 100vw;
 }
 
 .page{
-  position:absolute;
+  position: absolute;
+}
+
+#result-box{
+  background: wheat;
+  height: 100px;
 }
