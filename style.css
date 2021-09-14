@@ -67,6 +67,6 @@ width: 100vw;
 }
 
 #result-box{
+  display: flex;
   background: wheat;
-  height: 100px;
 }

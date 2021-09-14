@@ -27,8 +27,10 @@ window.addEventListener("DOMContentLoaded", async function () {
     //load CSV data
     let rawData = await loadCentresData();
 
-    let centreCodeWithCoordinates = {};
+    let centreCodeWithCoordinates = [];
 
+    let sparkGroup = L.layerGroup();
+    let baseGroup = L.layerGroup();
 
     for (let feature of features) {
 
@@ -37,20 +39,15 @@ window.addEventListener("DOMContentLoaded", async function () {
         let locations = [lat, lng];
         let marker = L.marker(locations);
 
-        marker.addTo(clusters);
+        marker.addTo(baseGroup);
 
         let popupDiv = document.createElement('div')
         popupDiv.innerHTML = feature.properties.Description;
 
-        //let centreName = popupDiv.querySelectorAll('td');
+        let centreName = popupDiv.querySelectorAll('td')[0];
         let centreCode = popupDiv.querySelectorAll('td')[1];
         //let address = popupDiv.querySelectorAll('td')[2];
         //console.log(centreCode);
-
-        centreCodeWithCoordinates.centreCode = centreCode.innerHTML
-        centreCodeWithCoordinates.latlng = locations
-        //console.log(centreCodeWithCoordinates)
-        
 
         for (let csvCentreData of rawData) {
             if (csvCentreData.centre_code.includes(centreCode.innerHTML)) {
@@ -59,31 +56,15 @@ window.addEventListener("DOMContentLoaded", async function () {
                 y = csvCentreData.spark_certified;
                 z = csvCentreData.centre_address;
             }
-            let sparkGroup = L.layerGroup();
-
-            if (csvCentreData.spark_certified.toLowerCase() == "yes"){
-                if (csvCentreData.centre_code == centreCodeWithCoordinates.centreCode){
-                    let sparkMarker = centreCodeWithCoordinates.latlng
-                    
-                    let sparkIcon = L.icon({
-                        iconUrl:'../images/spark-logo.jpeg',                    
-                        iconSize: [38, 38]
-                    })
-                    L.marker(sparkMarker, {icon: sparkIcon}).addTo(sparkGroup);
-                }
-            }
-            sparkGroup.addTo(map);
-            let baseLayers = {
-                'sparkMarkers': sparkGroup
-              }
-              
-              let overlayLayer = {
-              }
-              
-              L.control.layers(baseLayers, overlayLayer).addTo(map)
-    
-
         }
+
+        centreCodeWithCoordinates.push({
+            'centreName': centreName.innerHTML,
+            'centreCode': centreCode.innerHTML,
+            'latlng': locations,
+            'sparkCertified': y,
+            'address': z  
+          })
 
 
         let popupContent = `
@@ -96,6 +77,34 @@ window.addEventListener("DOMContentLoaded", async function () {
         marker.bindPopup(popupContent, popupOptions);
 
     }
+
+
+    for (let i of centreCodeWithCoordinates){
+        if (i.sparkCertified == "Yes"){
+            let sparkMarker = i.latlng
+            
+            let sparkIcon = L.icon({
+                iconUrl: '../images/spark-logo.jpeg',
+                iconSize: [38, 38]
+            })
+            
+            L.marker(sparkMarker, { icon: sparkIcon }).addTo(sparkGroup);
+        }
+    }  
+
+    //console.log(centreCodeWithCoordinates)
+
+
+    let baseLayers = {
+        'All Centres': baseGroup,
+        'SPARK Certified': sparkGroup
+      }
+      
+      let overlayLayer = {
+        'All Centres': baseGroup
+      }
+      
+      L.control.layers(baseLayers, overlayLayer).addTo(map)
 
     document.querySelector("#submit-btn").addEventListener('click', async function () {
 
@@ -114,39 +123,40 @@ window.addEventListener("DOMContentLoaded", async function () {
         let currentLng = response.data.longt;
         let currentCoordinates = [currentLat, currentLng];
         map.flyTo(currentCoordinates, 17);
+        //console.log(currentCoordinates)
 
         let popup = L.popup();
         popup.setLatLng(currentCoordinates);
         popup.setContent(`YOU ARE HERE!`);
         popup.openOn(map);
 
-        // let sparkGroup = L.layerGroup();
-        // for (let i = 0; i < 10; i++) {
-        //     let randomCoordinate = getRandomLatLng(map);
-        //     let marker = L.marker(randomCoordinate);
-        //     marker.addTo(group)
-        // }
-        // group.addTo(map)
+        map.getBounds();
 
-        // //1. create the lookup tables for the layers
-        // //map can only choose one from the base layer
-        // //radio controls
-        // let baseLayers = {
-        //     'markers': sparkGroup,
-        //     'circle': circleGroup
-        // }
-  
-        // //but can display 0 or more of the overlay layers (checkboxes)
-        // let overlayLayer = {
-        //     'circleMarker': circleMarkerLayer
-        // }
+        let searchResults100 = document.querySelector("#lessThan100");
+        let searchResults500 = document.querySelector("#lessThan500");
+        let searchResults1000 = document.querySelector("#lessThan1000");
 
-        // //2. display the layer control
-        // //first argument is the base layer
-        // //second argument is the overlay
-        // L.control.layers(baseLayers, overlayLayer).addTo(map)
+        let searchResultsCurrentCoordinates = L.latLng(currentCoordinates);
 
-        }    
-    )
+        for (let i of centreCodeWithCoordinates){
+            if (searchResultsCurrentCoordinates.distanceTo(i.latlng)/1000 < 0.1){
+                let distance = searchResultsCurrentCoordinates.distanceTo(i.latlng) / 1000
+                searchResults100.innerHTML += `<li>
+                <h6>${i.centreName}</h6>
+                Distance from your location: ${distance.toFixed(1)}km</li>`
 
+            } else if (searchResultsCurrentCoordinates.distanceTo(i.latlng)/1000 < 0.5){
+                let distance = searchResultsCurrentCoordinates.distanceTo(i.latlng) / 1000
+                searchResults500.innerHTML += `<li>
+                <h6>${i.centreName}</h6>
+                Distance from your location: ${distance.toFixed(1)}km</li>`
+
+            } else if (searchResultsCurrentCoordinates.distanceTo(i.latlng)/1000 < 1){
+                let distance = searchResultsCurrentCoordinates.distanceTo(i.latlng) / 1000
+                searchResults1000.innerHTML += `<li>
+                <h6>${i.centreName}</h6>
+                Distance from your location: ${distance.toFixed(1)}km</li>`
+            }
+        }
+    }) 
 });
