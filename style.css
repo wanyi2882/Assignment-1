@@ -3,6 +3,10 @@ height: 100vh;
 width: 100vw;
 }
 
+#container{
+  position:relative;
+}
+
 .main-image{
   background-image: url("../images/main-image.jpeg");
   height: 100vh;
@@ -18,6 +22,19 @@ width: 100vw;
   height: 100vh;
   width: 100vw;
   background: rgba(0,0,0,0.3);
+}
+
+.dropdown{
+  text-align: center;
+}
+.btn{
+  background-color: rgba(243, 223, 223, 0.3);
+  font-size:x-small;
+  top: 40%;
+}
+
+div>label, #submit-btn, #postal-code{
+  font-size: x-small;
 }
 
 #map{
@@ -48,16 +65,12 @@ width: 100vw;
   box-shadow: none;
 }  
 
-#container{
-  position:relative;
-}
-
-.hidden {
+.hidden-page {
     /* transition: transform 1s; */
     transform: translateX(-100%);
 }
 
-.show {
+.show-page {
   transition: transform 1s;
   transform: translateX(0);
 }
@@ -69,4 +82,27 @@ width: 100vw;
 #result-box{
   display: flex;
   background: wheat;
+}
+
+#search-div{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#levels-offered{
+  background-color: grey;
+  width: 226.11px;
+}
+
+#citizenship{
+  background-color: lavender;
+}
+
+#infantTypeID{
+  background-color: lightcyan;
+}
+
+#searchTermsResults{
+  background-color: cadetblue;
+  height: 50px;
 }

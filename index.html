@@ -25,48 +25,157 @@
     <div id="container">
         <!-- hero -->
         <div id="page-one" class="page main-image">
-            <div class="overlay d-flex">
-                <div class="d-flex align-items-center">
-                    <input type="text" id="postal-code" placeholder="Enter your postal code here" />
-                    <button id="submit-btn">submit</button>
-                    <div id="details"></div>
-                </div>
+            <div class="overlay">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Search for the nearest childcare Centre
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <div>
+                            <label>Search by Postal Code</label>
+                            <input type="text" id="postal-code" placeholder="Postal code" />
+                        </div>
+
+                        <div id="levels-offered">
+                            <h6>Choose the level offered</h6>
+                            <div>
+                                <input type="radio" id="level-kindergarden-one" name="level" class="level"
+                                    value="Kindergarten 1 (5 yrs old)" onclick="ShowHideDiv()" />
+                                <label>Kindergarden (5 Years Old)</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" id="level-kindergarden-two" name="level" class="level"
+                                    value="Kindergarten 2 (6 yrs old)" onclick="ShowHideDiv()" />
+                                <label>Kindergarden (6 Years Old)</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" id="level-pre-nursery" name="level" class="level"
+                                    value="Pre-Nursery (3 yrs old)" />
+                                <label>Pre-Nursery (3 yrs old)</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" id="level-nursery" name="level" class="level"
+                                    value="Nursery (4 yrs old)" />
+                                <label>Nursery (4 yrs old)</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" id="level-playgroup" name="level" class="level"
+                                    value="Playgroup (18 mths to 2 yrs old)" />
+                                <label>Playgroup (18 mths to 2 yrs old)</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" id="level-infant" name="level" class="level"
+                                    value="Infant (2 to 18 mths)" onclick="ShowHideDiv()" />
+                                <label>Infant (2 to 18 mths)</label>
+
+                                <div id="infantTypeID" style="display: none">
+                                    <div>Service Type:</div>
+                                    <div>
+                                        <input type="radio" name="infantType" class="infantTypeClass" value="Full Day" />
+                                        <label>Full Day</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" name="infantType" class="infantTypeClass" value="Emergency Care" />
+                                        <label>Emergency Care</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" name="infantType" class="infantTypeClass" value="Half Day AM" />
+                                        <label>Half Day AM</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" name="infantType" class="infantTypeClass" value="Half Day PM" />
+                                        <label>Half Day PM</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" name="infantType" class="infantTypeClass" value="Flexi Care" />
+                                        <label>Flexible Care</label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="citizenship">
+                            <h6>Your Citizenship</h6>
+                            <!-- with the same they bcecome mutually exclusive -->
+                            <div>
+                                <input type="radio" name="citizenship" class="citizenship" value="SC" />
+                                <label>Singapore Citizen</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" name="citizenship" class="citizenship" value="SPR" />
+                                <label>Singapore PR</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" name="citizenship" class="citizenship" value="Others" />
+                                <label>Others</label>
+                            </div>
+
+                        </div>
+
+                        <button id="submit-btn">submit</button>
+                    </div>
+                </div>    
             </div>
         </div>
+
         <!-- end of hero -->
 
         <!-- div will contain map -->
-        <div id="two" class="page hidden">
-        <div id="map" class="custom-popup"></div>
-        <div id="result-box">
+        <div id="two" class="page hidden-page">
+            <div id="map" class="custom-popup"></div>
 
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                  <h5 class="card-title">Within 100m</h5>
-                  <p class="card-text"></p>
-                  <ul id="lessThan100"></ul>
+            <!-- result box div -->
+            <div id="result-box">
+                <div id="search-div" class="container">
+                    <div class="row">
+                        <div id="searchTermsResults" class="col">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Within 100m
+                                </button>
+                                <ul id="lessThan100" class="dropdown-menu" aria-labelledby="dropdownMenuButton2"></ul>
+                              </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Within 500m
+                                </button>
+                                <ul id="lessThan500" class="dropdown-menu" aria-labelledby="dropdownMenuButton3"></ul>
+                              </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Within 1KM
+                                </button>
+                                <ul id="lessThan1000" class="dropdown-menu" aria-labelledby="dropdownMenuButton4"></ul>
+                              </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                  <h5 class="card-title">Within 500m</h5>
-                  <p class="card-text"></p>
-                  <ul id="lessThan500"></ul>
-                </div>
-            </div>
-
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                  <h5 class="card-title">Within 1KM</h5>
-                  <p class="card-text"></p>
-                  <ul id="lessThan1000"></ul>
-                </div>
-            </div>
-
         </div>
-        </div>
-
     </div>
 
 
@@ -89,8 +198,14 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <!-- csv data javascript -->
-    <script src="data.js"></script>
+    <!-- map javascript  -->
+    <script src="map.js"></script>
+
+    <!-- csv data on centre-information javascript -->
+    <script src="convert-csv-to-json-javascript/centre-information.js"></script>
+
+    <!-- csv data on centre-services javascript -->
+    <script src="convert-csv-to-json-javascript/centre-services.js"></script>
 
     <!-- custom script -->
     <script src="script.js"></script>
