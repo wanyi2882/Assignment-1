@@ -106,3 +106,31 @@ div>label, #submit-btn, #postal-code{
   background-color: cadetblue;
   height: 50px;
 }
+
+@media screen and (min-width: 768px){
+  .btn{
+    font-size:medium;
+  }
+  
+  div>label, #submit-btn, #postal-code{
+    font-size: medium;
+  }
+
+  #levels-offered{
+    width: 342.97px;
+  }
+}
+  
+  @media screen and (min-width: 1200px){
+    .btn{
+      font-size:large;
+    }
+    
+    div>label, #submit-btn, #postal-code{
+      font-size: large;
+    }
+
+    #levels-offered{
+      width: 381.56px;
+    }
+  }
