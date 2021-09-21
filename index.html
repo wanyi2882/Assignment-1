@@ -41,97 +41,62 @@
                             <h6>Choose the level offered</h6>
                             <div>
                                 <input type="radio" id="level-kindergarden-one" name="level" class="level"
-                                    value="Kindergarten 1 (5 yrs old)" onclick="ShowHideDiv()" />
+                                    value="k1_vacancy" />
                                 <label>Kindergarden (5 Years Old)</label>
                             </div>
 
                             <div>
                                 <input type="radio" id="level-kindergarden-two" name="level" class="level"
-                                    value="Kindergarten 2 (6 yrs old)" onclick="ShowHideDiv()" />
+                                    value="k2Vacancy" />
                                 <label>Kindergarden (6 Years Old)</label>
                             </div>
 
                             <div>
                                 <input type="radio" id="level-pre-nursery" name="level" class="level"
-                                    value="Pre-Nursery (3 yrs old)" />
+                                    value="n1Vacancy" />
                                 <label>Pre-Nursery (3 yrs old)</label>
                             </div>
 
                             <div>
                                 <input type="radio" id="level-nursery" name="level" class="level"
-                                    value="Nursery (4 yrs old)" />
+                                    value="n2Vacancy" />
                                 <label>Nursery (4 yrs old)</label>
                             </div>
 
                             <div>
                                 <input type="radio" id="level-playgroup" name="level" class="level"
-                                    value="Playgroup (18 mths to 2 yrs old)" />
+                                    value="playGroupVacancy" />
                                 <label>Playgroup (18 mths to 2 yrs old)</label>
                             </div>
 
                             <div>
                                 <input type="radio" id="level-infant" name="level" class="level"
-                                    value="Infant (2 to 18 mths)" onclick="ShowHideDiv()" />
+                                    value="infantVacancy" />
                                 <label>Infant (2 to 18 mths)</label>
-
-                                <div id="infantTypeID" style="display: none">
-                                    <div>Service Type:</div>
-                                    <div>
-                                        <input type="radio" name="infantType" class="infantTypeClass"
-                                            value="Full Day" />
-                                        <label>Full Day</label>
-                                    </div>
-
-                                    <div>
-                                        <input type="radio" name="infantType" class="infantTypeClass"
-                                            value="Emergency Care" />
-                                        <label>Emergency Care</label>
-                                    </div>
-
-                                    <div>
-                                        <input type="radio" name="infantType" class="infantTypeClass"
-                                            value="Half Day AM" />
-                                        <label>Half Day AM</label>
-                                    </div>
-
-                                    <div>
-                                        <input type="radio" name="infantType" class="infantTypeClass"
-                                            value="Half Day PM" />
-                                        <label>Half Day PM</label>
-                                    </div>
-
-                                    <div>
-                                        <input type="radio" name="infantType" class="infantTypeClass"
-                                            value="Flexi Care" />
-                                        <label>Flexible Care</label>
-                                    </div>
-
-                                </div>
                             </div>
-                        </div>
-
-                        <div id="citizenship">
-                            <h6>Your Citizenship</h6>
-                            <!-- with the same they bcecome mutually exclusive -->
-                            <div>
-                                <input type="radio" name="citizenship" class="citizenship" value="SC" />
-                                <label>Singapore Citizen</label>
-                            </div>
-
-                            <div>
-                                <input type="radio" name="citizenship" class="citizenship" value="SPR" />
-                                <label>Singapore PR</label>
-                            </div>
-
-                            <div>
-                                <input type="radio" name="citizenship" class="citizenship" value="Others" />
-                                <label>Others</label>
-                            </div>
-
-                        </div>
-
-                        <button id="submit-btn">submit</button>
                     </div>
+                    <div id="vacancyID">
+                        <h6>Vacancy</h6>
+                        <div>
+                            <input type="radio" name="vacancy" id="vacancyImmediate" class="vacancy"
+                                value="Immediate" />
+                            <label>Immediate</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="vacancy" id="vacancyMoreOne" class="vacancy"
+                                value="More than 1 Year" />
+                            <label>More than 1 Year</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="vacancy" id="vacancyLessOne" class="vacancy"
+                                value="Within 1 Year" />
+                            <label>Within 1 Year</label>
+                        </div>
+                    </div>
+                    <button id="submit-btn">submit</button>
+                </div>
                 </div>
             </div>
         </div>
@@ -140,64 +105,42 @@
 
         <!-- div will contain map -->
         <div id="two" class="page hidden-page">
+
+            <!-- map div -->
             <div id="map" class="custom-popup"></div>
 
-            <!-- result box div -->
-            <div id="result-box">
-                <div id="search-div" class="container">
-                    <div class="row">
-                        <div id="searchTermsResults" class="col">
-                        </div>
+            <!-- comparison preview box div -->
+            <div id="preview-div">
+                <div class="card" style="width: 18rem;">
+                    <img src="" class="card-img-top" alt="">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Within 100m
-                                </button>
-                                <ul id="lessThan100" class="dropdown-menu" aria-labelledby="dropdownMenuButton2"></ul>
-                            </div>
-                        </div>
+                  </div>
 
-                        <div class="col-12 col-md-4">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Within 500m
-                                </button>
-                                <ul id="lessThan500" class="dropdown-menu" aria-labelledby="dropdownMenuButton3"></ul>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-4">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton4"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Within 1KM
-                                </button>
-                                <ul id="lessThan1000" class="dropdown-menu" aria-labelledby="dropdownMenuButton4"></ul>
-                            </div>
-                        </div>
-
+                  <div class="card" style="width: 18rem;">
+                    <img src="" class="card-img-top" alt="">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
-                </div>
+                  </div>
+
+                  <div class="card" style="width: 18rem;">
+                    <img src="" class="card-img-top" alt="">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
             </div>
 
-            <!-- comparison box div -->
-            <div id="comparison-table" class="container">
-                <div class="row">
-                    <div class="col-sm-4">
-                        One of three columns
-                    </div>
-                    <div class="col-sm-4">
-                        One of three columns
-                    </div>
-                    <div class="col-sm-4">
-                        One of three columns
-                    </div>
-                </div>
-            </div>
+
+
         </div>
     </div>
 

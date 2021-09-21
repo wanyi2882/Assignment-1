@@ -38,7 +38,7 @@ async function centreInformation() {
         contact = csvCentreData.centre_contact_no;
         email = csvCentreData.centre_email_address;
         website = csvCentreData.centre_website;
-        infantVancancy = csvCentreData.infant_vacancy;
+        infantVacancy = csvCentreData.infant_vacancy;
         playGroupVacancy = csvCentreData.pg_vacancy;
         n1Vacancy = csvCentreData.n1_vacancy;
         n2Vacancy = csvCentreData.n2_vacancy;
@@ -60,18 +60,16 @@ async function centreInformation() {
             'contact': contact,
             'email': email,
             'website': website,
+            'infantVacancy': infantVacancy,
+            'playGroupVacancy': playGroupVacancy,
+            'n1Vacancy': n1Vacancy,
+            'n2Vacancy': n2Vacancy,
+            'k1Vacancy': k1Vacancy,
+            'k2Vacancy': k2Vacancy,
+            'foodOffered': foodOffered
         })
     }
     return centreCodeWithInformation;
-}
-
-//Array of services and prices
-async function serviceAndPrice(){
-
-    //load CSV data on centre services
-    let rawServicesData = await loadServicesData();
-
-    return rawServicesData;   
 }
 
 //merge two data set
@@ -88,56 +86,33 @@ async function merge() {
 }
 
 //All markers and popup functions
-async function markers() {
-    let markers = await merge();
-    for (let x of markers) {
-        let marker = L.marker(x.latlng).addTo(baseGroup);
+//async function markers() {
+    //let markers = await merge();
 
-        let popupContent = `
-        Centre Name: ${x.centreName} <br>
-        spark_certified: ${x.sparkCertified}<br>
-        Address: ${x.address}`;
+    //let choosenCentres = []
 
-        let popupOptions =
-            { 'minWidth': '500' }
+    //for (let x of markers) {
 
-        marker.bindPopup(popupContent, popupOptions);
-    }
-}
+        // let compareButton = document.createElement("button")
+        // compareButton.className = "compare-btn"
+        // compareButton.innerHTML = "Add to Compare"
 
-//spark certified markers and popup functions
-async function sparkMarkers() {
-    let markers = await merge();
-    for (let x of markers) {
-        if (x.sparkCertified == "Yes") {
-            let marker = x.latlng
-            let sparkIcon = L.icon({
-                iconUrl: '../images/spark-logo.jpeg',
-                iconSize: [38, 38]
-            })
+        //popupContent.appendChild(compareButton)
+       
+        // L.DomEvent.on(compareButton, 'click', () => {
+        //     choosenCentres.push(x.centreCode);
+        //     console.log(choosenCentres)
 
-            let sparkMarker = L.marker(marker, { icon: sparkIcon }).addTo(sparkGroup);
+        //     let compareDiv = document.createElement("div")
+        //     compareDiv.className = "col compare-col"
+        //     compareDiv.innerHTML += x.centreName
 
-            let popupContent = `
-                Centre Name: ${x.centreName} <br>
-                spark_certified: ${x.sparkCertified}<br>
-                Address: ${x.address}`;
+        //     let compareRow = document.querySelector(".compare-row")
 
-            let popupOptions =
-                { 'minWidth': '500' }
-
-            sparkMarker.bindPopup(popupContent, popupOptions);
-        }
-    }
-}
-
-//show hide div
-function ShowHideDiv() {
-    if (document.querySelector("#level-infant").checked){
-        document.querySelector("#infantTypeID").style.display = "block"
-    }else {document.querySelector("#infantTypeID").style.display ="none";
-    }
-}
+        //     compareRow.appendChild(compareDiv)
+        // })
+    //}    
+//}
 
 //Results function
 document.querySelector("#submit-btn").addEventListener('click', async function () {
@@ -151,6 +126,7 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
     // only show map page
     document.querySelector('#two').classList.add('show-page');
 
+    //Search by postal code
     let searchTerms = document.querySelector("#postal-code").value;
     let response = await axios.get("https://geocode.xyz/" + searchTerms + "?json=1");
     let currentLat = response.data.latt;
@@ -163,79 +139,102 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
     popup.setContent(`YOU ARE HERE!`);
     popup.openOn(map);
 
-    let searchTermsResults = document.querySelector("#searchTermsResults")
     let searchResults100 = document.querySelector("#lessThan100");
     let searchResults500 = document.querySelector("#lessThan500");
     let searchResults1000 = document.querySelector("#lessThan1000");
 
     let searchResultsCurrentCoordinates = L.latLng(currentCoordinates);
 
+    let levelAll = document.querySelectorAll(".level:checked")
+    let vacancyAll = document.querySelectorAll(".vacancy:checked")
+
+    //Call merge function
+
     let searchResults = await merge();
-    let q = await serviceAndPrice();
+    let choosenCentres = []
+
+    for (let x of searchResults) {
+
+        //popup content
+        let popupDiv = document.createElement("div");
+        popupDiv.className = "popup"
+        popupDiv.innerHTML += `Centre Name: ${x.centreName}
+        Spark Certified: ${x.sparkCertified}
+        Address: ${x.address}`
+
+        let compareButton = document.createElement("button")
+        compareButton.className = "compare-btn"
+        compareButton.innerHTML = "Add to Compare"
+       
+        L.DomEvent.on(compareButton, 'click', () => {
+            if (choosenCentres.length < 3){
+                choosenCentres.push(x.centreCode);
+                console.log(choosenCentres)
+            } else if (choosenCentres.length){
+                alert ("You can only add a max of 3 centres")
+            }
+        })
+
+        let popupContent = document.createElement("div")
+        popupContent.appendChild(popupDiv)
+        popupContent.appendChild(compareButton)
 
 
-    let selectedLevelButton = document.querySelector('.level:checked');
-    let selectedCitizenshipButton = document.querySelector('.citizenship:checked');
-    let infantTypeButton = document.querySelector('.infantTypeClass:checked');
+        let popupOptions =
+            { 'minWidth': '500' }
 
-    searchTermsResults.innerHTML += `
-    You have choosen ${selectedLevelButton.value} on ${infantTypeButton.value} basis for ${selectedCitizenshipButton.value}
-    `
-          
-    for (let x of q){
-        for (let i of searchResults) {
+        //Add all Markers
+        L.marker(x.latlng).addTo(baseClustersGroup).bindPopup(popupContent, popupOptions);    
 
-            if (searchResultsCurrentCoordinates.distanceTo(i.latlng) / 1000 < 0.1 && i.centreCode == x.centre_code && selectedLevelButton.value == x.levels_offered && selectedCitizenshipButton.value == x.type_of_citizenship && x.type_of_service.includes(infantTypeButton.value)) {
-                let distance = searchResultsCurrentCoordinates.distanceTo(i.latlng) / 1000;
-                searchResults100.innerHTML += `<li>
-                    Centre Name: ${x.centre_name}<br>
-                    Fees: $${x.fees} / month<br>
-                    Distance from your location: ${distance.toFixed(1)}km
-                    </li>`
-    
-            } else if (searchResultsCurrentCoordinates.distanceTo(i.latlng) / 1000 < 0.5 && i.centreCode == x.centre_code && selectedLevelButton.value == x.levels_offered && selectedCitizenshipButton.value == x.type_of_citizenship && x.type_of_service.includes(infantTypeButton.value)) {
-                let distance = searchResultsCurrentCoordinates.distanceTo(i.latlng) / 1000
-                searchResults500.innerHTML += `<li>
-                    Centre Name: ${x.centre_name}<br>
-                    Fees: $${x.fees} / month<br>
-                    Distance from your location: ${distance.toFixed(1)}km</li>`
-    
-            } else if (searchResultsCurrentCoordinates.distanceTo(i.latlng) / 1000 < 1 && i.centreCode == x.centre_code && selectedLevelButton.value == x.levels_offered && selectedCitizenshipButton.value == x.type_of_citizenship && x.type_of_service.includes(infantTypeButton.value)) {
-                let distance = searchResultsCurrentCoordinates.distanceTo(i.latlng) / 1000
-                searchResults1000.innerHTML += `<li>
-                    Centre Name: ${x.centre_name}<br>
-                    Fees: $${x.fees} / month<br>
-                    Distance from your location: ${distance.toFixed(1)}km</li>`
-            } 
+        //Get Lat Lng by search criteria
+        if (x[levelAll[0].value] == vacancyAll[0].value){
+            L.marker(x.latlng).addTo(searchClusterGroup).bindPopup(popupContent, popupOptions);
+        }
+
+        //Distance markers
+        if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.1) {
+            L.marker(x.latlng).addTo(distance100ClusterLayer).bindPopup(popupContent, popupOptions);
+        } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.5) {
+            L.marker(x.latlng).addTo(distance500ClusterLayer).bindPopup(popupContent, popupOptions);
+        } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 1) {
+            L.marker(x.latlng).addTo(distance1000ClusterLayer).bindPopup(popupContent, popupOptions);
+        }
+
+        //Spark Markers
+        if (x.sparkCertified == "Yes") {
+            let sparkIcon = L.icon({
+                iconUrl: '../images/spark-logo.jpeg',
+                iconSize: [38, 38]
+            })
+
+            L.marker(x.latlng, { icon: sparkIcon }).addTo(sparkGroup).bindPopup(popupContent, popupOptions);
         }
     }
 })
 
-
-//start of script
-
 //Create map layers and clusters
 let sparkGroup = L.layerGroup();
-let baseGroup = L.layerGroup();
+let baseClustersGroup = L.markerClusterGroup();
+let searchClusterGroup = L.markerClusterGroup();
+let distance100ClusterLayer = L.markerClusterGroup();
+let distance500ClusterLayer = L.markerClusterGroup();
+let distance1000ClusterLayer = L.markerClusterGroup();
 
-let clusters = L.markerClusterGroup();
-clusters.addTo(map);
-
-//Add all markers
-markers()
-
-//Add markers to spark certified centres
-sparkMarkers()
+baseClustersGroup.addTo(map);
 
 //create map controls
 let baseLayers = {
-    'All Centres': baseGroup,
+    'Searched': searchClusterGroup,
     'SPARK Certified': sparkGroup
 }
 
 let overlayLayer = {
+    'All Centres': baseClustersGroup,
+    'Within 100m': distance100ClusterLayer,
+    'From 100m - 500m': distance500ClusterLayer,
+    'From 500m - 1Km': distance1000ClusterLayer
 }
-baseGroup.addTo(map)
+
 L.control.layers(baseLayers, overlayLayer).addTo(map)
 
 

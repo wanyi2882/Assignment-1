@@ -98,13 +98,29 @@ div>label, #submit-btn, #postal-code{
   background-color: lavender;
 }
 
-#infantTypeID{
+#vacancyID{
   background-color: lightcyan;
 }
 
 #searchTermsResults{
   background-color: cadetblue;
   height: 50px;
+}
+
+#comparison-table{
+  width: 80vw;
+  height: 40vh;
+  background-color: darksalmon;
+}
+
+.compare-col{
+  height: 50px;
+  background-color: lightgreen;
+}
+
+.compare-row{
+  height: 100px;
+  background-color: springgreen;
 }
 
 @media screen and (min-width: 768px){
