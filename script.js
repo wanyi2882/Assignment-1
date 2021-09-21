@@ -85,35 +85,6 @@ async function merge() {
     return mergedDataSet;
 }
 
-//All markers and popup functions
-//async function markers() {
-    //let markers = await merge();
-
-    //let choosenCentres = []
-
-    //for (let x of markers) {
-
-        // let compareButton = document.createElement("button")
-        // compareButton.className = "compare-btn"
-        // compareButton.innerHTML = "Add to Compare"
-
-        //popupContent.appendChild(compareButton)
-       
-        // L.DomEvent.on(compareButton, 'click', () => {
-        //     choosenCentres.push(x.centreCode);
-        //     console.log(choosenCentres)
-
-        //     let compareDiv = document.createElement("div")
-        //     compareDiv.className = "col compare-col"
-        //     compareDiv.innerHTML += x.centreName
-
-        //     let compareRow = document.querySelector(".compare-row")
-
-        //     compareRow.appendChild(compareDiv)
-        // })
-    //}    
-//}
-
 //Results function
 document.querySelector("#submit-btn").addEventListener('click', async function () {
 
@@ -139,10 +110,6 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
     popup.setContent(`YOU ARE HERE!`);
     popup.openOn(map);
 
-    let searchResults100 = document.querySelector("#lessThan100");
-    let searchResults500 = document.querySelector("#lessThan500");
-    let searchResults1000 = document.querySelector("#lessThan1000");
-
     let searchResultsCurrentCoordinates = L.latLng(currentCoordinates);
 
     let levelAll = document.querySelectorAll(".level:checked")
@@ -151,7 +118,6 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
     //Call merge function
 
     let searchResults = await merge();
-    let choosenCentres = []
 
     for (let x of searchResults) {
 
@@ -172,9 +138,12 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
                 document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0]
             } else if (choosenCentres.length < 2){
                 choosenCentres.push(x.centreName);
+                document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0]
                 document.querySelector("#preview-item-two-name").innerHTML = choosenCentres[1]
             } else if (choosenCentres.length < 3){
                 choosenCentres.push(x.centreName);
+                document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0]
+                document.querySelector("#preview-item-two-name").innerHTML = choosenCentres[1]
                 document.querySelector("#preview-item-three-name").innerHTML = choosenCentres[2]
             } else {
                 alert ("You can only add a max of 3 centres")
@@ -243,4 +212,37 @@ let overlayLayer = {
 
 L.control.layers(baseLayers, overlayLayer).addTo(map)
 
+    let choosenCentres = []
 
+//preview div remove buttons
+document.querySelector("#remove-btn-one").addEventListener("click", function(){
+    for (let i=0; i < choosenCentres.length; i++){
+        if (choosenCentres[i] == document.querySelector("#preview-item-one-name").innerHTML){
+            document.querySelector("#preview-item-one-name").innerHTML = "";
+            choosenCentres.splice(i, 1);
+            console.log(choosenCentres)
+        }
+    }
+})
+
+document.querySelector("#remove-btn-two").addEventListener("click", function(){
+    for (let i=0; i < choosenCentres.length; i++){
+        if (choosenCentres[i] == document.querySelector("#preview-item-two-name").innerHTML){
+            document.querySelector("#preview-item-two-name").innerHTML = "";
+            choosenCentres.splice(i, 1);
+            console.log(choosenCentres)
+
+        }
+    }
+})
+
+document.querySelector("#remove-btn-three").addEventListener("click", function(){
+    for (let i=0; i < choosenCentres.length; i++){
+        if (choosenCentres[i] == document.querySelector("#preview-item-three-name").innerHTML){
+            document.querySelector("#preview-item-three-name").innerHTML = "";
+            choosenCentres.splice(i, 1);
+            console.log(choosenCentres)
+
+        }
+    }
+})
