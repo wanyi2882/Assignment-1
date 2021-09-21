@@ -167,10 +167,16 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
         compareButton.innerHTML = "Add to Compare"
        
         L.DomEvent.on(compareButton, 'click', () => {
-            if (choosenCentres.length < 3){
-                choosenCentres.push(x.centreCode);
-                console.log(choosenCentres)
-            } else if (choosenCentres.length){
+            if (choosenCentres.length < 1){
+                choosenCentres.push(x.centreName);
+                document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0]
+            } else if (choosenCentres.length < 2){
+                choosenCentres.push(x.centreName);
+                document.querySelector("#preview-item-two-name").innerHTML = choosenCentres[1]
+            } else if (choosenCentres.length < 3){
+                choosenCentres.push(x.centreName);
+                document.querySelector("#preview-item-three-name").innerHTML = choosenCentres[2]
+            } else {
                 alert ("You can only add a max of 3 centres")
             }
         })
