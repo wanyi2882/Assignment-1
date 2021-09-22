@@ -48,9 +48,6 @@ async function centreInformation() {
         secondLanguages = csvCentreData.second_languages_offered;
         weekdayHours = csvCentreData.weekday_full_day;
         saturdayHours = csvCentreData.saturday;
-        extendedHours = csvCentreData.extended_operating_hours;
-        transportProvided = csvCentreData.provision_of_transport;
-        govtSubsidy = csvCentreData.government_subsidy;
 
         centreCodeWithInformation.push({
             'centreCode': centreCode,
@@ -67,7 +64,9 @@ async function centreInformation() {
             'k1Vacancy': k1Vacancy,
             'k2Vacancy': k2Vacancy,
             'foodOffered': foodOffered,
-            'weekdayHours': weekdayHours
+            'weekdayHours': weekdayHours,
+            'saturdayHours': saturdayHours,
+            'secondLanguages': secondLanguages
         })
     }
     return centreCodeWithInformation;
@@ -239,7 +238,7 @@ document.querySelector("#remove-btn-two").addEventListener("click", function () 
 //show comparision page when click on #compare-btn
 document.querySelector("#compare-btn").addEventListener("click", async function () {
 
-    if (choosenCentres.length < 1) {
+    if (choosenCentres.length < 2) {
         alert("Please add 2 centres for comparision")
 
     } else if (choosenCentres.length = 2) {
@@ -249,7 +248,7 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
             p.classList.add('hidden-page');
         }
 
-        // show comparision page
+        //Show comparision page
         document.querySelector('#three').classList.add('show-page');
 
         //Comparison Page Table Function
@@ -257,45 +256,126 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
         //Call merge function
         let compareTable = await merge();
 
-        for (let i of choosenCentresCodes) {
+        for (let i=0;  i < choosenCentresCodes.length; i++) {
             for (let x of compareTable) {
-                if (i == x.centreCode) {
-
-                    let columnOne = document.createElement("div");
-                    columnOne.className = "col-4"
-                    columnOne.style = "margin-left:20px"
+                if (choosenCentresCodes[i] == x.centreCode) {
 
                     //Centre name
-                    let nameDiv = document.createElement("div");
-                    nameDiv.className = "row"
-                    nameDiv.innerHTML = x.centreName
+                    document.querySelectorAll(".name-compare")[i].innerHTML = x.centreName
 
                     //Spark certification
-                    let sparkDiv = document.createElement("div");
                     if (x.sparkCertified == "Yes"){
-                        sparkDiv.className = "row fas fa-check"
+                        document.querySelectorAll(".spark-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
                     } else{
-                        sparkDiv.className = "row fas fa-times"
+                        document.querySelectorAll(".spark-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
                     }
 
                     //Distance
-                    let distanceDiv = document.createElement("div");
-                    distanceDiv.innerHTML = `${(L.latLng(currentCoordinates).distanceTo(x.latlng)).toFixed(0)} Metres`
+                    let searchTerms = document.querySelector("#postal-code").value;
+                    document.querySelector("#distance-compare-header").innerHTML = `Distance from postal code ${searchTerms}`
+                    document.querySelectorAll(".distance-compare")[i].innerHTML = `${(L.latLng(currentCoordinates).distanceTo(x.latlng)).toFixed(0)} Metres`
                     
                     //Operating Hours
-                    let weekdayDiv = document.createElement("div");
                     if (x.weekdayHours == "na"){
-                        weekdayDiv.innerHTML = `Please contact the centre at ${x.contact} for more information on their weekday operating hours`
+                        document.querySelectorAll(".weekday-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on their weekday operating hours`
                     } else {
-                        weekdayDiv.innerHTML = x.weekdayHours
+                        document.querySelectorAll(".weekday-compare")[i].innerHTML = x.weekdayHours
                     }
-                    let mainTable = document.querySelector("#three");
 
-                    mainTable.appendChild(columnOne)
-                    columnOne.appendChild(nameDiv)
-                    columnOne.appendChild(sparkDiv)
-                    columnOne.appendChild(distanceDiv)
-                    columnOne.appendChild(weekdayDiv)
+                    //Saturday Operating Hours
+                    if (x.saturdayHours =="na"){
+                        document.querySelectorAll(".saturday-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on their Saturday operating hours`
+                    } else {
+                        document.querySelectorAll(".saturday-compare")[i].innerHTML = x.saturdayHours
+                    }
+
+                    //Infant Vacancy
+                    if (x.infantVacancy =="na"){
+                        document.querySelectorAll(".infant-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
+                    } else {
+                        document.querySelectorAll(".infant-compare")[i].innerHTML = x.infantVacancy
+                    }
+
+                    //Playgroup Vacancy
+                    if (x.playGroupVacancy =="na"){
+                        document.querySelectorAll(".playgroup-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
+                    } else {
+                        document.querySelectorAll(".playgroup-compare")[i].innerHTML = x.playGroupVacancy
+                    }
+
+                    //Pre-Nursery Vacancy
+                    if (x.n1Vacancy =="na"){
+                        document.querySelectorAll(".n1-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
+                    } else {
+                        document.querySelectorAll(".n1-compare")[i].innerHTML = x.n1Vacancy
+                    }
+                    
+                    //Nursery Vacancy
+                    if (x.n2Vacancy =="na"){
+                        document.querySelectorAll(".n2-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
+                    } else {
+                        document.querySelectorAll(".n2-compare")[i].innerHTML = x.n2Vacancy
+                    }   
+
+                    //Kindergarden One Vacancy
+                    if (x.k1Vacancy =="na"){
+                        document.querySelectorAll(".k1-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
+                    } else {
+                        document.querySelectorAll(".k1-compare")[i].innerHTML = x.k1Vacancy
+                    } 
+
+                    //Kindergarden Two Vacancy
+                    if (x.k2Vacancy =="na"){
+                        document.querySelectorAll(".k2-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
+                    } else {
+                        document.querySelectorAll(".k2-compare")[i].innerHTML = x.k2Vacancy
+                    }
+                    
+                    //Halal
+                    if (x.foodOffered.includes("with Certification from MUIS")){
+                        document.querySelectorAll(".halal-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
+                    } else if (x.foodOffered.includes("without Certification from MUIS but from Halal Sources")){
+                        document.querySelectorAll(".halal-compare")[i].innerHTML = `No Pork No Lard (without Certification from MUIS but from Halal Sources)`
+                    } else if (x.foodOffered.includes("from Non-Halal Sources")){
+                        document.querySelectorAll(".halal-compare")[i].innerHTML = `No Pork No Lard (from Non-Halal Sources)`
+                    } else {
+                        document.querySelectorAll(".halal-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
+                    }
+
+                    //Vegeterian
+                    if (x.foodOffered.includes("Vegetarian")){
+                        document.querySelectorAll(".vegeterian-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
+                    } else {
+                        document.querySelectorAll(".vegeterian-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
+                    }
+
+                    //Beef
+                    if (x.foodOffered.includes("with Beef")){
+                        document.querySelectorAll(".beef-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
+                    } else {
+                        document.querySelectorAll(".beef-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
+                    }
+
+                    //Chinese
+                    if (x.secondLanguages.includes("Chinese")){
+                        document.querySelectorAll(".chinese-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
+                    } else {
+                        document.querySelectorAll(".chinese-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
+                    }
+
+                    //Malay
+                    if (x.secondLanguages.includes("Malay")){
+                        document.querySelectorAll(".malay-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
+                    } else {
+                        document.querySelectorAll(".malay-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
+                    }                    
+
+                    //Tamil
+                    if (x.secondLanguages.includes("Tamil")){
+                        document.querySelectorAll(".tamil-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
+                    } else {
+                        document.querySelectorAll(".tamil-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
+                    }
 
                 }
             }
