@@ -129,7 +129,7 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
         Address: ${x.address}`
 
         let compareButton = document.createElement("button")
-        compareButton.className = "compare-btn"
+        compareButton.className = "add-to-compare-btn"
         compareButton.innerHTML = "Add to Compare"
        
         L.DomEvent.on(compareButton, 'click', () => {
@@ -212,7 +212,7 @@ let overlayLayer = {
 
 L.control.layers(baseLayers, overlayLayer).addTo(map)
 
-    let choosenCentres = []
+let choosenCentres = []
 
 //preview div remove buttons
 document.querySelector("#remove-btn-one").addEventListener("click", function(){
@@ -220,7 +220,6 @@ document.querySelector("#remove-btn-one").addEventListener("click", function(){
         if (choosenCentres[i] == document.querySelector("#preview-item-one-name").innerHTML){
             document.querySelector("#preview-item-one-name").innerHTML = "";
             choosenCentres.splice(i, 1);
-            console.log(choosenCentres)
         }
     }
 })
@@ -230,8 +229,6 @@ document.querySelector("#remove-btn-two").addEventListener("click", function(){
         if (choosenCentres[i] == document.querySelector("#preview-item-two-name").innerHTML){
             document.querySelector("#preview-item-two-name").innerHTML = "";
             choosenCentres.splice(i, 1);
-            console.log(choosenCentres)
-
         }
     }
 })
@@ -241,8 +238,26 @@ document.querySelector("#remove-btn-three").addEventListener("click", function()
         if (choosenCentres[i] == document.querySelector("#preview-item-three-name").innerHTML){
             document.querySelector("#preview-item-three-name").innerHTML = "";
             choosenCentres.splice(i, 1);
-            console.log(choosenCentres)
-
         }
     }
+})
+
+//show comparision page when click on #compare-btn
+document.querySelector("#compare-btn").addEventListener("click", function(){
+
+    if (choosenCentres.length < 2){
+        alert("Please add at least 2 centres for comparision")
+
+    } else if (choosenCentres.length >= 2){
+        let allPages = document.querySelectorAll('.page');
+        for (let p of allPages) {
+            p.classList.remove('show-page');
+            p.classList.add('hidden-page');
+        }
+        
+        // show comparision page
+        document.querySelector('#three').classList.add('show-page');
+
+        
+    };
 })

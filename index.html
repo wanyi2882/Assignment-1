@@ -58,8 +58,7 @@
                             </div>
 
                             <div>
-                                <input type="radio" id="level-nursery" name="level" class="level"
-                                    value="n2Vacancy" />
+                                <input type="radio" id="level-nursery" name="level" class="level" value="n2Vacancy" />
                                 <label>Nursery (4 yrs old)</label>
                             </div>
 
@@ -74,36 +73,36 @@
                                     value="infantVacancy" />
                                 <label>Infant (2 to 18 mths)</label>
                             </div>
-                    </div>
-                    <div id="vacancyID">
-                        <h6>Vacancy</h6>
-                        <div>
-                            <input type="radio" name="vacancy" id="vacancyImmediate" class="vacancy"
-                                value="Immediate" />
-                            <label>Immediate</label>
                         </div>
+                        <div id="vacancyID">
+                            <h6>Vacancy</h6>
+                            <div>
+                                <input type="radio" name="vacancy" id="vacancyImmediate" class="vacancy"
+                                    value="Immediate" />
+                                <label>Immediate</label>
+                            </div>
 
-                        <div>
-                            <input type="radio" name="vacancy" id="vacancyMoreOne" class="vacancy"
-                                value="More than 1 Year" />
-                            <label>More than 1 Year</label>
-                        </div>
+                            <div>
+                                <input type="radio" name="vacancy" id="vacancyMoreOne" class="vacancy"
+                                    value="More than 1 Year" />
+                                <label>More than 1 Year</label>
+                            </div>
 
-                        <div>
-                            <input type="radio" name="vacancy" id="vacancyLessOne" class="vacancy"
-                                value="Within 1 Year" />
-                            <label>Within 1 Year</label>
+                            <div>
+                                <input type="radio" name="vacancy" id="vacancyLessOne" class="vacancy"
+                                    value="Within 1 Year" />
+                                <label>Within 1 Year</label>
+                            </div>
                         </div>
+                        <button id="submit-btn">submit</button>
                     </div>
-                    <button id="submit-btn">submit</button>
-                </div>
                 </div>
             </div>
         </div>
 
         <!-- end of hero -->
 
-        <!-- div will contain map -->
+        <!-- Page 2 containing map and a preview div -->
         <div id="two" class="page hidden-page">
 
             <!-- map div -->
@@ -111,36 +110,52 @@
 
             <!-- comparison preview box div -->
             <div id="preview-div">
-                <div id="preview-item-one" class="card d-inline-block" style="width: 30rem;">
+                <div id="preview-item-one" class="card d-inline-block" style="width: 25rem;">
                     <img src="" class="card-img-top" alt="">
                     <div class="card-body">
-                      <h5 id="preview-item-one-name" class="card-title"></h5>
-                      <p id="preview-item-one-content" class="card-text"></p>
-                      <div id="remove-btn-one" class="btn">Remove</div>
+                        <h5 id="preview-item-one-name" class="card-title"></h5>
+                        <p id="preview-item-one-content" class="card-text"></p>
+                        <div id="remove-btn-one" class="btn">Remove</div>
                     </div>
-                  </div>
+                </div>
 
-                  <div id="preview-item-two" class="card d-inline-block" style="width: 30rem;">
+                <div id="preview-item-two" class="card d-inline-block" style="width: 25rem;">
                     <img src="" class="card-img-top" alt="">
                     <div class="card-body">
-                      <h5 id="preview-item-two-name" class="card-title"></h5>
-                      <p id="preview-item-two-content" class="card-text"></p>
-                      <div id="remove-btn-two" class="btn">Remove</div>
+                        <h5 id="preview-item-two-name" class="card-title"></h5>
+                        <p id="preview-item-two-content" class="card-text"></p>
+                        <div id="remove-btn-two" class="btn">Remove</div>
                     </div>
-                  </div>
+                </div>
 
-                  <div id="preview-item-three" class="card d-inline-block" style="width: 30rem;">
+                <div id="preview-item-three" class="card d-inline-block" style="width: 25rem;">
                     <img src="" class="card-img-top" alt="">
                     <div class="card-body">
-                      <h5 id="preview-item-three-name" class="card-title"></h5>
-                      <p id="preview-item-three-content" class="card-text"></p>
-                      <div id="remove-btn-three" class="btn">Remove</div>
+                        <h5 id="preview-item-three-name" class="card-title"></h5>
+                        <p id="preview-item-three-content" class="card-text"></p>
+                        <div id="remove-btn-three" class="btn">Remove</div>
                     </div>
-                  </div>
+                </div>
+
+                <button id="compare-btn">Start Compare</button>
             </div>
+        </div>
 
-
-
+        <!-- Page 3 containing comparision table-->
+        <div id="three" class="page hidden-page">
+            <div id="comparision-table" class="container">
+                <div class="row">
+                  <div class="col">
+                    Column
+                  </div>
+                  <div class="col">
+                    Column
+                  </div>
+                  <div class="col">
+                    Column
+                  </div>
+                </div>
+              </div>
         </div>
     </div>
 
