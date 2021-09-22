@@ -66,7 +66,8 @@ async function centreInformation() {
             'n2Vacancy': n2Vacancy,
             'k1Vacancy': k1Vacancy,
             'k2Vacancy': k2Vacancy,
-            'foodOffered': foodOffered
+            'foodOffered': foodOffered,
+            'weekdayHours': weekdayHours
         })
     }
     return centreCodeWithInformation;
@@ -85,6 +86,8 @@ async function merge() {
     return mergedDataSet;
 }
 
+let currentCoordinates = []
+
 //Results function
 document.querySelector("#submit-btn").addEventListener('click', async function () {
 
@@ -102,7 +105,7 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
     let response = await axios.get("https://geocode.xyz/" + searchTerms + "?json=1");
     let currentLat = response.data.latt;
     let currentLng = response.data.longt;
-    let currentCoordinates = [currentLat, currentLng];
+    currentCoordinates = [currentLat, currentLng];
     map.flyTo(currentCoordinates, 17);
 
     let popup = L.popup();
@@ -131,22 +134,21 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
         let compareButton = document.createElement("button")
         compareButton.className = "add-to-compare-btn"
         compareButton.innerHTML = "Add to Compare"
-       
+
         L.DomEvent.on(compareButton, 'click', () => {
-            if (choosenCentres.length < 1){
+            if (choosenCentres.length < 1) {
                 choosenCentres.push(x.centreName);
-                document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0]
-            } else if (choosenCentres.length < 2){
+                choosenCentresCodes.push(x.centreCode);
+
+                document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0];
+            } else if (choosenCentres.length < 2) {
                 choosenCentres.push(x.centreName);
-                document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0]
-                document.querySelector("#preview-item-two-name").innerHTML = choosenCentres[1]
-            } else if (choosenCentres.length < 3){
-                choosenCentres.push(x.centreName);
-                document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0]
-                document.querySelector("#preview-item-two-name").innerHTML = choosenCentres[1]
-                document.querySelector("#preview-item-three-name").innerHTML = choosenCentres[2]
+                choosenCentresCodes.push(x.centreCode);
+
+                document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0];
+                document.querySelector("#preview-item-two-name").innerHTML = choosenCentres[1];
             } else {
-                alert ("You can only add a max of 3 centres")
+                alert("You can only add a max of 2 centres")
             }
         })
 
@@ -159,10 +161,10 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
             { 'minWidth': '500' }
 
         //Add all Markers
-        L.marker(x.latlng).addTo(baseClustersGroup).bindPopup(popupContent, popupOptions);    
+        L.marker(x.latlng).addTo(baseClustersGroup).bindPopup(popupContent, popupOptions);
 
         //Get Lat Lng by search criteria
-        if (x[levelAll[0].value] == vacancyAll[0].value){
+        if (x[levelAll[0].value] == vacancyAll[0].value) {
             L.marker(x.latlng).addTo(searchClusterGroup).bindPopup(popupContent, popupOptions);
         }
 
@@ -213,51 +215,91 @@ let overlayLayer = {
 L.control.layers(baseLayers, overlayLayer).addTo(map)
 
 let choosenCentres = []
+let choosenCentresCodes = []
 
 //preview div remove buttons
-document.querySelector("#remove-btn-one").addEventListener("click", function(){
-    for (let i=0; i < choosenCentres.length; i++){
-        if (choosenCentres[i] == document.querySelector("#preview-item-one-name").innerHTML){
+document.querySelector("#remove-btn-one").addEventListener("click", function () {
+    for (let i = 0; i < choosenCentres.length; i++) {
+        if (choosenCentres[i] == document.querySelector("#preview-item-one-name").innerHTML) {
             document.querySelector("#preview-item-one-name").innerHTML = "";
             choosenCentres.splice(i, 1);
         }
     }
 })
 
-document.querySelector("#remove-btn-two").addEventListener("click", function(){
-    for (let i=0; i < choosenCentres.length; i++){
-        if (choosenCentres[i] == document.querySelector("#preview-item-two-name").innerHTML){
+document.querySelector("#remove-btn-two").addEventListener("click", function () {
+    for (let i = 0; i < choosenCentres.length; i++) {
+        if (choosenCentres[i] == document.querySelector("#preview-item-two-name").innerHTML) {
             document.querySelector("#preview-item-two-name").innerHTML = "";
             choosenCentres.splice(i, 1);
         }
     }
 })
 
-document.querySelector("#remove-btn-three").addEventListener("click", function(){
-    for (let i=0; i < choosenCentres.length; i++){
-        if (choosenCentres[i] == document.querySelector("#preview-item-three-name").innerHTML){
-            document.querySelector("#preview-item-three-name").innerHTML = "";
-            choosenCentres.splice(i, 1);
-        }
-    }
-})
-
 //show comparision page when click on #compare-btn
-document.querySelector("#compare-btn").addEventListener("click", function(){
+document.querySelector("#compare-btn").addEventListener("click", async function () {
 
-    if (choosenCentres.length < 2){
-        alert("Please add at least 2 centres for comparision")
+    if (choosenCentres.length < 1) {
+        alert("Please add 2 centres for comparision")
 
-    } else if (choosenCentres.length >= 2){
+    } else if (choosenCentres.length = 2) {
         let allPages = document.querySelectorAll('.page');
         for (let p of allPages) {
             p.classList.remove('show-page');
             p.classList.add('hidden-page');
         }
-        
+
         // show comparision page
         document.querySelector('#three').classList.add('show-page');
 
-        
-    };
+        //Comparison Page Table Function
+
+        //Call merge function
+        let compareTable = await merge();
+
+        for (let i of choosenCentresCodes) {
+            for (let x of compareTable) {
+                if (i == x.centreCode) {
+
+                    let columnOne = document.createElement("div");
+                    columnOne.className = "col-4"
+                    columnOne.style = "margin-left:20px"
+
+                    //Centre name
+                    let nameDiv = document.createElement("div");
+                    nameDiv.className = "row"
+                    nameDiv.innerHTML = x.centreName
+
+                    //Spark certification
+                    let sparkDiv = document.createElement("div");
+                    if (x.sparkCertified == "Yes"){
+                        sparkDiv.className = "row fas fa-check"
+                    } else{
+                        sparkDiv.className = "row fas fa-times"
+                    }
+
+                    //Distance
+                    let distanceDiv = document.createElement("div");
+                    distanceDiv.innerHTML = `${(L.latLng(currentCoordinates).distanceTo(x.latlng)).toFixed(0)} Metres`
+                    
+                    //Operating Hours
+                    let weekdayDiv = document.createElement("div");
+                    if (x.weekdayHours == "na"){
+                        weekdayDiv.innerHTML = `Please contact the centre at ${x.contact} for more information on their weekday operating hours`
+                    } else {
+                        weekdayDiv.innerHTML = x.weekdayHours
+                    }
+                    let mainTable = document.querySelector("#three");
+
+                    mainTable.appendChild(columnOne)
+                    columnOne.appendChild(nameDiv)
+                    columnOne.appendChild(sparkDiv)
+                    columnOne.appendChild(distanceDiv)
+                    columnOne.appendChild(weekdayDiv)
+
+                }
+            }
+        }
+    }
 })
+

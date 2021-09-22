@@ -107,8 +107,17 @@ div>label, #submit-btn, #postal-code{
   height: 50px;
 }
 
-#comparision-table{
-  background-color: cornflowerblue;
+#three{
+  background-color: lightgoldenrodyellow;
+}
+
+.row{
+  height: 50px;
+  word-wrap: break-word;
+}
+
+.col-4{
+  margin: 0%;
 }
 
 @media screen and (min-width: 768px){
