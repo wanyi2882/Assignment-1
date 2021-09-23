@@ -88,7 +88,7 @@ async function merge() {
 let currentCoordinates = []
 
 //Results function
-document.querySelector("#submit-btn").addEventListener('click', async function () {
+document.querySelector("#page-one-search-btn").addEventListener('click', async function () {
 
     let allPages = document.querySelectorAll('.page');
     for (let p of allPages) {
@@ -97,10 +97,10 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
     }
 
     // only show map page
-    document.querySelector('#two').classList.add('show-page');
+    document.querySelector('#page-two').classList.add('show-page');
 
     //Search by postal code
-    let searchTerms = document.querySelector("#postal-code").value;
+    let searchTerms = document.querySelector("#page-one-postal-code").value;
     let response = await axios.get("https://geocode.xyz/" + searchTerms + "?json=1");
     let currentLat = response.data.latt;
     let currentLng = response.data.longt;
@@ -113,9 +113,6 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
     popup.openOn(map);
 
     let searchResultsCurrentCoordinates = L.latLng(currentCoordinates);
-
-    let levelAll = document.querySelectorAll(".level:checked")
-    let vacancyAll = document.querySelectorAll(".vacancy:checked")
 
     //Call merge function
 
@@ -161,11 +158,6 @@ document.querySelector("#submit-btn").addEventListener('click', async function (
 
         //Add all Markers
         L.marker(x.latlng).addTo(baseClustersGroup).bindPopup(popupContent, popupOptions);
-
-        //Get Lat Lng by search criteria
-        if (x[levelAll[0].value] == vacancyAll[0].value) {
-            L.marker(x.latlng).addTo(searchClusterGroup).bindPopup(popupContent, popupOptions);
-        }
 
         //Distance markers
         if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.1) {
@@ -251,7 +243,7 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
         }
 
         //Show comparision page
-        document.querySelector('#three').classList.add('show-page');
+        document.querySelector('#page-three').classList.add('show-page');
 
         //Comparison Page Table Function
 
@@ -385,8 +377,22 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
     }
 })
 
+//Click Home Button on page two to return to landing page
+document.querySelector("#page-two-home-btn").addEventListener("click", function(){
+    let allPages = document.querySelectorAll('.page');
+    for (let p of allPages) {
+        p.classList.remove('show-page');
+        p.classList.add('hidden-page');
+    }
+
+    //show landing page
+    document.querySelector('#page-one').classList.add('show-page');
+    document.querySelector("#page-one-postal-code").value = ""
+
+})
+
 //Return to map page from comparison page when click on the close button
-document.querySelector(".btn-close").addEventListener("click", function(){
+document.querySelector("#page-three-close-btn").addEventListener("click", function(){
     let allPages = document.querySelectorAll('.page');
     for (let p of allPages) {
         p.classList.remove('show-page');
@@ -394,5 +400,5 @@ document.querySelector(".btn-close").addEventListener("click", function(){
     }
 
     // only show map page
-    document.querySelector('#two').classList.add('show-page');
+    document.querySelector('#page-two').classList.add('show-page');
 })

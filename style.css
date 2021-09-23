@@ -13,32 +13,56 @@ width: 100vw;
   width:100vw;
   background-size:cover;
   background-position:center;
-
-  display: flex;
-  align-items: center;
 }
 
 .overlay{
   height: 100vh;
   width: 100vw;
   background: rgba(0,0,0,0.3);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.dropdown{
+#searchBar{ 
+  color: #F46036;
+  background-color: rgba(255, 255, 255, 0.815);
+  border-radius: 15px; 
+  width: 80%;
+}
+
+#searchBarTag{
+  padding: 5px;
   text-align: center;
 }
-.btn{
-  background-color: rgba(243, 223, 223, 0.3);
-  font-size:x-small;
-  top: 40%;
+
+#searchBarContent{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+  padding: 10px;
 }
 
-div>label, #submit-btn, #postal-code{
-  font-size: x-small;
+#page-one-postal-code{
+  width: 80%;
+  margin-right: 3px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+#page-one-search-btn{
+  width: 20%;
+  border: 1px black solid;
+  word-wrap: break-word;
+  text-align: center;
+  border-radius: 15px;
+  font-size: 10px;
 }
 
 #map{
-    height: 60vh;
+    height: 50vh;
     width: 100vw;
     border: 1px solid black;
   }
@@ -79,71 +103,31 @@ div>label, #submit-btn, #postal-code{
   position: absolute;
 }
 
-#result-box{
-  display: flex;
-  background: wheat;
-}
-
-#search-div{
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-#levels-offered{
-  background-color: grey;
-  width: 226.11px;
-}
-
-#citizenship{
-  background-color: lavender;
-}
-
-#vacancyID{
-  background-color: lightcyan;
-}
-
-#searchTermsResults{
-  background-color: cadetblue;
-  height: 50px;
+#two{
+  width: 100vw;
+  height: 100vh;
 }
 
 #three{
   background-color: lightgoldenrodyellow;
 }
 
-.row{
-  height: 50px;
-  word-wrap: break-word;
+#table-id{
+  width: 100vw;
+  height: 100vh;
 }
 
-.col-4{
-  margin: 0%;
-}
 
 @media screen and (min-width: 768px){
-  .btn{
-    font-size:medium;
-  }
-  
-  div>label, #submit-btn, #postal-code{
+  #submit-btn, #postal-code{
     font-size: medium;
   }
 
-  #levels-offered{
-    width: 342.97px;
-  }
 }
   
   @media screen and (min-width: 1200px){
-    .btn{
-      font-size:large;
-    }
-    
-    div>label, #submit-btn, #postal-code{
+    #submit-btn, #postal-code{
       font-size: large;
     }
 
-    #levels-offered{
-      width: 381.56px;
-    }
   }
