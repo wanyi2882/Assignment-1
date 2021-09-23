@@ -222,6 +222,7 @@ document.querySelector("#remove-btn-one").addEventListener("click", function () 
         if (choosenCentres[i] == document.querySelector("#preview-item-one-name").innerHTML) {
             document.querySelector("#preview-item-one-name").innerHTML = "";
             choosenCentres.splice(i, 1);
+            choosenCentresCodes.splice(i,1)
         }
     }
 })
@@ -231,6 +232,7 @@ document.querySelector("#remove-btn-two").addEventListener("click", function () 
         if (choosenCentres[i] == document.querySelector("#preview-item-two-name").innerHTML) {
             document.querySelector("#preview-item-two-name").innerHTML = "";
             choosenCentres.splice(i, 1);
+            choosenCentresCodes.splice(i,1)
         }
     }
 })
@@ -383,3 +385,14 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
     }
 })
 
+//Return to map page from comparison page when click on the close button
+document.querySelector(".btn-close").addEventListener("click", function(){
+    let allPages = document.querySelectorAll('.page');
+    for (let p of allPages) {
+        p.classList.remove('show-page');
+        p.classList.add('hidden-page');
+    }
+
+    // only show map page
+    document.querySelector('#two').classList.add('show-page');
+})
