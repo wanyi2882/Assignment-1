@@ -439,6 +439,13 @@ document.querySelector("#page-two-home-btn").addEventListener("click", function 
     document.querySelector("#preview-item-two-name").innerHTML = "";
     choosenCentres = [];
     choosenCentresCodes = [];
+
+    //Clear markers
+    map.removeLayer(sparkGroup, baseClustersGroup, distance100ClusterLayer, distance500ClusterLayer, distance1000ClusterLayer)
+
+    //Close existing popups
+    map.closePopup();
+
 })
 
 //Return to map page from comparison page when click on the close button
