@@ -434,13 +434,21 @@ document.querySelector("#page-two-home-btn").addEventListener("click", function 
 
     //Empty the values
     document.querySelector("#page-one-postal-code").value = "";
+
+    document.querySelector("#preview-item-one").style.display = "none"
     document.querySelector("#preview-item-one-name").innerHTML = "";
+
+    document.querySelector("#preview-item-two").style.display = "none"
     document.querySelector("#preview-item-two-name").innerHTML = "";
     choosenCentres = [];
     choosenCentresCodes = [];
 
-    //Clear markers
-    map.removeLayer(sparkGroup, baseClustersGroup, distance100ClusterLayer, distance500ClusterLayer, distance1000ClusterLayer)
+    //Empty layers
+    sparkGroup.clearLayers();
+    baseClustersGroup.clearLayers();
+    distance100ClusterLayer.clearLayers();
+    distance500ClusterLayer.clearLayers();
+    distance1000ClusterLayer.clearLayers();
 
     //Close existing popups
     map.closePopup();
