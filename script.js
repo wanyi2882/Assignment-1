@@ -136,8 +136,6 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
                 choosenCentres.push(x.centreName);
                 choosenCentresCodes.push(x.centreCode);
 
-                document.querySelector("#preview-div").style.display = "block";
-
                 document.querySelector("#preview-item-one").style.display = "block";
 
                 document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0];
@@ -191,7 +189,6 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
 //Create map layers and clusters
 let sparkGroup = L.layerGroup();
 let baseClustersGroup = L.markerClusterGroup();
-let searchClusterGroup = L.markerClusterGroup();
 let distance100ClusterLayer = L.markerClusterGroup();
 let distance500ClusterLayer = L.markerClusterGroup();
 let distance1000ClusterLayer = L.markerClusterGroup();
@@ -200,7 +197,6 @@ baseClustersGroup.addTo(map);
 
 //create map controls
 let baseLayers = {
-    'Searched': searchClusterGroup,
     'SPARK Certified': sparkGroup
 }
 
@@ -213,6 +209,43 @@ let overlayLayer = {
 
 L.control.layers(baseLayers, overlayLayer).addTo(map)
 
+//Buttons for layer control
+document.querySelector("#filter-spark-layer-btn").addEventListener("click", function () {
+    if (map.hasLayer(sparkGroup)) {
+        map.removeLayer(sparkGroup);
+    } else {
+        map.addLayer(sparkGroup);
+    }
+})
+
+document.querySelector("#filter-within-100m-layer-btn").addEventListener("click", function(){
+    if (map.hasLayer(distance100ClusterLayer)) {
+        map.removeLayer(distance100ClusterLayer);
+    } else {
+        map.addLayer(distance100ClusterLayer);
+        map.removeLayer(baseClustersGroup)
+    }
+})
+
+document.querySelector("#filter-within-500m-layer-btn").addEventListener("click", function(){
+    if (map.hasLayer(distance500ClusterLayer)) {
+        map.removeLayer(distance500ClusterLayer);
+    } else {
+        map.addLayer(distance500ClusterLayer);
+        map.removeLayer(baseClustersGroup)
+    }
+})
+document.querySelector("#filter-within-1km-layer-btn").addEventListener("click", function(){
+    if (map.hasLayer(distance1000ClusterLayer)) {
+        map.removeLayer(distance1000ClusterLayer);
+    } else {
+        map.addLayer(distance1000ClusterLayer);
+        map.removeLayer(baseClustersGroup)
+    }
+})
+
+
+
 let choosenCentres = []
 let choosenCentresCodes = []
 
@@ -223,9 +256,9 @@ document.querySelector("#remove-btn-one").addEventListener("click", function () 
             document.querySelector("#preview-item-one").style.display = "none"
             document.querySelector("#preview-item-one-name").innerHTML = "";
             choosenCentres.splice(i, 1);
-            choosenCentresCodes.splice(i,1)
+            choosenCentresCodes.splice(i, 1)
 
-            
+
         }
     }
 })
@@ -236,7 +269,7 @@ document.querySelector("#remove-btn-two").addEventListener("click", function () 
             document.querySelector("#preview-item-two").style.display = "none"
             document.querySelector("#preview-item-two-name").innerHTML = "";
             choosenCentres.splice(i, 1);
-            choosenCentresCodes.splice(i,1)
+            choosenCentresCodes.splice(i, 1)
         }
     }
 })
@@ -262,7 +295,7 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
         //Call merge function
         let compareTable = await merge();
 
-        for (let i=0;  i < choosenCentresCodes.length; i++) {
+        for (let i = 0; i < choosenCentresCodes.length; i++) {
             for (let x of compareTable) {
                 if (choosenCentresCodes[i] == x.centreCode) {
 
@@ -270,9 +303,9 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
                     document.querySelectorAll(".name-compare")[i].innerHTML = x.centreName
 
                     //Spark certification
-                    if (x.sparkCertified == "Yes"){
+                    if (x.sparkCertified == "Yes") {
                         document.querySelectorAll(".spark-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
-                    } else{
+                    } else {
                         document.querySelectorAll(".spark-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
                     }
 
@@ -280,104 +313,104 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
                     let searchTerms = document.querySelector("#page-one-postal-code").value;
                     document.querySelector("#distance-compare-header").innerHTML = `Distance from postal code ${searchTerms}`
                     document.querySelectorAll(".distance-compare")[i].innerHTML = `${(L.latLng(currentCoordinates).distanceTo(x.latlng)).toFixed(0)} Metres`
-                    
+
                     //Operating Hours
-                    if (x.weekdayHours == "na"){
+                    if (x.weekdayHours == "na") {
                         document.querySelectorAll(".weekday-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on their weekday operating hours`
                     } else {
                         document.querySelectorAll(".weekday-compare")[i].innerHTML = x.weekdayHours
                     }
 
                     //Saturday Operating Hours
-                    if (x.saturdayHours =="na"){
+                    if (x.saturdayHours == "na") {
                         document.querySelectorAll(".saturday-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on their Saturday operating hours`
                     } else {
                         document.querySelectorAll(".saturday-compare")[i].innerHTML = x.saturdayHours
                     }
 
                     //Infant Vacancy
-                    if (x.infantVacancy =="na"){
+                    if (x.infantVacancy == "na") {
                         document.querySelectorAll(".infant-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
                     } else {
                         document.querySelectorAll(".infant-compare")[i].innerHTML = x.infantVacancy
                     }
 
                     //Playgroup Vacancy
-                    if (x.playGroupVacancy =="na"){
+                    if (x.playGroupVacancy == "na") {
                         document.querySelectorAll(".playgroup-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
                     } else {
                         document.querySelectorAll(".playgroup-compare")[i].innerHTML = x.playGroupVacancy
                     }
 
                     //Pre-Nursery Vacancy
-                    if (x.n1Vacancy =="na"){
+                    if (x.n1Vacancy == "na") {
                         document.querySelectorAll(".n1-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
                     } else {
                         document.querySelectorAll(".n1-compare")[i].innerHTML = x.n1Vacancy
                     }
-                    
+
                     //Nursery Vacancy
-                    if (x.n2Vacancy =="na"){
+                    if (x.n2Vacancy == "na") {
                         document.querySelectorAll(".n2-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
                     } else {
                         document.querySelectorAll(".n2-compare")[i].innerHTML = x.n2Vacancy
-                    }   
+                    }
 
                     //Kindergarden One Vacancy
-                    if (x.k1Vacancy =="na"){
+                    if (x.k1Vacancy == "na") {
                         document.querySelectorAll(".k1-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
                     } else {
                         document.querySelectorAll(".k1-compare")[i].innerHTML = x.k1Vacancy
-                    } 
+                    }
 
                     //Kindergarden Two Vacancy
-                    if (x.k2Vacancy =="na"){
+                    if (x.k2Vacancy == "na") {
                         document.querySelectorAll(".k2-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on vacancy`
                     } else {
                         document.querySelectorAll(".k2-compare")[i].innerHTML = x.k2Vacancy
                     }
-                    
+
                     //Halal
-                    if (x.foodOffered.includes("with Certification from MUIS")){
+                    if (x.foodOffered.includes("with Certification from MUIS")) {
                         document.querySelectorAll(".halal-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
-                    } else if (x.foodOffered.includes("without Certification from MUIS but from Halal Sources")){
+                    } else if (x.foodOffered.includes("without Certification from MUIS but from Halal Sources")) {
                         document.querySelectorAll(".halal-compare")[i].innerHTML = `No Pork No Lard (without Certification from MUIS but from Halal Sources)`
-                    } else if (x.foodOffered.includes("from Non-Halal Sources")){
+                    } else if (x.foodOffered.includes("from Non-Halal Sources")) {
                         document.querySelectorAll(".halal-compare")[i].innerHTML = `No Pork No Lard (from Non-Halal Sources)`
                     } else {
                         document.querySelectorAll(".halal-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
                     }
 
                     //Vegeterian
-                    if (x.foodOffered.includes("Vegetarian")){
+                    if (x.foodOffered.includes("Vegetarian")) {
                         document.querySelectorAll(".vegeterian-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
                     } else {
                         document.querySelectorAll(".vegeterian-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
                     }
 
                     //Beef
-                    if (x.foodOffered.includes("with Beef")){
+                    if (x.foodOffered.includes("with Beef")) {
                         document.querySelectorAll(".beef-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
                     } else {
                         document.querySelectorAll(".beef-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
                     }
 
                     //Chinese
-                    if (x.secondLanguages.includes("Chinese")){
+                    if (x.secondLanguages.includes("Chinese")) {
                         document.querySelectorAll(".chinese-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
                     } else {
                         document.querySelectorAll(".chinese-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
                     }
 
                     //Malay
-                    if (x.secondLanguages.includes("Malay")){
+                    if (x.secondLanguages.includes("Malay")) {
                         document.querySelectorAll(".malay-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
                     } else {
                         document.querySelectorAll(".malay-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
-                    }                    
+                    }
 
                     //Tamil
-                    if (x.secondLanguages.includes("Tamil")){
+                    if (x.secondLanguages.includes("Tamil")) {
                         document.querySelectorAll(".tamil-compare")[i].innerHTML = `<i class="far fa-check-circle"></i>`
                     } else {
                         document.querySelectorAll(".tamil-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
@@ -390,7 +423,7 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
 })
 
 //Click Home Button on page two to return to landing page
-document.querySelector("#page-two-home-btn").addEventListener("click", function(){
+document.querySelector("#page-two-home-btn").addEventListener("click", function () {
     let allPages = document.querySelectorAll('.page');
     for (let p of allPages) {
         p.classList.remove('show-page');
@@ -409,7 +442,7 @@ document.querySelector("#page-two-home-btn").addEventListener("click", function(
 })
 
 //Return to map page from comparison page when click on the close button
-document.querySelector("#page-three-close-btn").addEventListener("click", function(){
+document.querySelector("#page-three-close-btn").addEventListener("click", function () {
     let allPages = document.querySelectorAll('.page');
     for (let p of allPages) {
         p.classList.remove('show-page');

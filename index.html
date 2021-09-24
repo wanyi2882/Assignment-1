@@ -52,16 +52,22 @@
 
       <!-- Search Bar and Filter Buttons -->
       <div id="page-two-bar">
-        <button id="page-two-home-btn">Home</button>
+        <button id="page-two-home-btn" class="btn btn-primary">Home</button>
+        <button id="filter-spark-layer-btn" class="btn btn-secondary">Show Spark Certified Centres</button>
+        <button id="filter-within-100m-layer-btn" class="btn btn-danger">Show Centres within 100m</button>
+        <button id="filter-within-500m-layer-btn" class="btn btn-danger">Show Centres within 500m</button>
+        <button id="filter-within-1km-layer-btn" class="btn btn-danger">Show Centres within 1Km</button>
+        
+
       </div>
 
       <section>
-      <!-- map div -->
+        <!-- map div -->
 
-      <div id="map" class="custom-popup"></div>
+        <div id="map" class="custom-popup"></div>
 
-      <!-- legend div -->
-      <div id="legend-div"></div>
+        <!-- legend div -->
+        <div id="legend-div"></div>
 
       </section>
 
@@ -69,21 +75,23 @@
       <!-- comparison preview box div -->
       <div id="preview-div">
         <p>Centres that you want to compare:</p>
-        <div id="preview-item-one" class="card preview-card">
-          <div class="card-body">
-            <i id="remove-btn-one" class="btn fas fa-minus-circle remove-btn"></i>
-            <h5 id="preview-item-one-name" class="card-title card-name"></h5>
+        <div id="preview-items-div">
+          <div id="preview-item-one" class="card preview-card">
+            <div class="card-body">
+              <i id="remove-btn-one" class="btn fas fa-minus-circle remove-btn"></i>
+              <h5 id="preview-item-one-name" class="card-title card-name"></h5>
+            </div>
           </div>
-        </div>
 
-        <div id="preview-item-two" class="card preview-card">
-          <div class="card-body">
-            <i id="remove-btn-two" class="btn fas fa-minus-circle remove-btn"></i>
-            <h5 id="preview-item-two-name" class="card-title card-name"></h5>
+          <div id="preview-item-two" class="card preview-card">
+            <div class="card-body">
+              <i id="remove-btn-two" class="btn fas fa-minus-circle remove-btn"></i>
+              <h5 id="preview-item-two-name" class="card-title card-name"></h5>
+            </div>
           </div>
-        </div>
 
-        <div class="btn" id="compare-btn">Start Compare</div>
+          <div class="btn" id="compare-btn">Start Compare</div>
+        </div>
       </div>
     </div>
 
