@@ -235,6 +235,7 @@ document.querySelector("#filter-within-500m-layer-btn").addEventListener("click"
         map.removeLayer(baseClustersGroup)
     }
 })
+
 document.querySelector("#filter-within-1km-layer-btn").addEventListener("click", function(){
     if (map.hasLayer(distance1000ClusterLayer)) {
         map.removeLayer(distance1000ClusterLayer);
@@ -243,8 +244,6 @@ document.querySelector("#filter-within-1km-layer-btn").addEventListener("click",
         map.removeLayer(baseClustersGroup)
     }
 })
-
-
 
 let choosenCentres = []
 let choosenCentresCodes = []

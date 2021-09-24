@@ -161,12 +161,13 @@ section{
 }
 
 #page-three{
-  background-color: lightgoldenrodyellow;
+  display: flex;
+  padding-left: 10%;
 }
 
 #table-id{
-  width: 100vw;
-  height: 100vh;
+  width: 70vw;
+  height: 90vh;
 }
 
 @media screen and (min-width: 576px){
