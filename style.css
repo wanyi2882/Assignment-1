@@ -7,6 +7,20 @@ width: 100vw;
   position:relative;
 }
 
+.hidden-page {
+  /* transition: transform 1s; */
+  transform: translateX(-100%);
+}
+
+.show-page {
+transition: transform 1s;
+transform: translateX(0);
+}
+
+.page{
+position: absolute;
+}
+
 .main-image{
   background-image: url("../images/main-image.jpeg");
   height: 100vh;
@@ -61,10 +75,20 @@ width: 100vw;
   font-size: 10px;
 }
 
+#page-two{
+  width: 100vw;
+  height: 100vh;
+}
+
+section{
+  border: 1px solid pink;
+}
+
 #map{
     height: 50vh;
-    width: 100vw;
+    width: 90%;
     border: 1px solid black;
+    margin: 10px;
   }
 
 .custom-popup .leaflet-popup-content-wrapper {
@@ -89,32 +113,61 @@ width: 100vw;
   box-shadow: none;
 }  
 
-.hidden-page {
-    /* transition: transform 1s; */
-    transform: translateX(-100%);
+#legend-div{
+  height: 10vh;
+  width: 90%;
+  background-color: aqua;
+  margin: 15px;
 }
 
-.show-page {
-  transition: transform 1s;
-  transform: translateX(0);
+#preview-item-one{
+  display: none;
 }
 
-.page{
+#preview-item-two{
+  display: none;
+}
+
+#preview-div{
+  border: 1px solid black;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 30px;
+
+  font-family: 'Roboto Slab', serif;
+  font-size: 14px;
+  display: none;
+}
+
+.remove-btn{
   position: absolute;
+  right: -5px;
+  top: -10px;
+  padding: 0;
 }
 
-#two{
-  width: 100vw;
-  height: 100vh;
+.preview-card{
+  margin: 20px;
+  width: 12rem;
+  height: 80px;
 }
 
-#three{
+.card-name{
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+}
+
+#page-three{
   background-color: lightgoldenrodyellow;
 }
 
 #table-id{
   width: 100vw;
   height: 100vh;
+}
+
+@media screen and (min-width: 576px){
+
 }
 
 

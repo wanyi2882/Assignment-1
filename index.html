@@ -21,6 +21,12 @@
     integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto+Slab&display=swap" rel="stylesheet">
+
+
   <!-- custom css -->
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
@@ -47,32 +53,37 @@
       <!-- Search Bar and Filter Buttons -->
       <div id="page-two-bar">
         <button id="page-two-home-btn">Home</button>
-        <div>
-          <input id="postal-code" type="text" placeholder="Enter Postal Code Here" />
-          <button id="page-two-search-btn" class="btn search-btn" type="submit">Search</button>
-        </div>
       </div>
 
+      <section>
       <!-- map div -->
+
       <div id="map" class="custom-popup"></div>
+
+      <!-- legend div -->
+      <div id="legend-div"></div>
+
+      </section>
+
 
       <!-- comparison preview box div -->
       <div id="preview-div">
-        <div id="preview-item-one" class="card d-inline-block" style="width: 25rem;">
+        <p>Centres that you want to compare:</p>
+        <div id="preview-item-one" class="card preview-card">
           <div class="card-body">
-            <h5 id="preview-item-one-name" class="card-title"></h5>
-            <button id="remove-btn-one" class="btn">Remove</button>
+            <i id="remove-btn-one" class="btn fas fa-minus-circle remove-btn"></i>
+            <h5 id="preview-item-one-name" class="card-title card-name"></h5>
           </div>
         </div>
 
-        <div id="preview-item-two" class="card d-inline-block" style="width: 25rem;">
+        <div id="preview-item-two" class="card preview-card">
           <div class="card-body">
-            <h5 id="preview-item-two-name" class="card-title"></h5>
-            <button id="remove-btn-two" class="btn">Remove</button>
+            <i id="remove-btn-two" class="btn fas fa-minus-circle remove-btn"></i>
+            <h5 id="preview-item-two-name" class="card-title card-name"></h5>
           </div>
         </div>
 
-        <button id="compare-btn">Start Compare</button>
+        <div class="btn" id="compare-btn">Start Compare</div>
       </div>
     </div>
 

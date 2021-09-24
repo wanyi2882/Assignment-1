@@ -32,9 +32,9 @@ async function centreInformation() {
 
     for (let csvCentreData of rawCentreData) {
         centreCode = csvCentreData.centre_code;
-        centreName = csvCentreData.centre_name;
+        centreName = csvCentreData.centre_name.toUpperCase();
         sparkCertified = csvCentreData.spark_certified;
-        centreAddress = csvCentreData.centre_address;
+        centreAddress = csvCentreData.centre_address.toUpperCase();
         contact = csvCentreData.centre_contact_no;
         email = csvCentreData.centre_email_address;
         website = csvCentreData.centre_website;
@@ -136,10 +136,18 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
                 choosenCentres.push(x.centreName);
                 choosenCentresCodes.push(x.centreCode);
 
+                document.querySelector("#preview-div").style.display = "block";
+
+                document.querySelector("#preview-item-one").style.display = "block";
+
                 document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0];
             } else if (choosenCentres.length < 2) {
                 choosenCentres.push(x.centreName);
                 choosenCentresCodes.push(x.centreCode);
+
+                document.querySelector("#preview-item-one").style.display = "block";
+
+                document.querySelector("#preview-item-two").style.display = "block";
 
                 document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0];
                 document.querySelector("#preview-item-two-name").innerHTML = choosenCentres[1];
@@ -212,9 +220,12 @@ let choosenCentresCodes = []
 document.querySelector("#remove-btn-one").addEventListener("click", function () {
     for (let i = 0; i < choosenCentres.length; i++) {
         if (choosenCentres[i] == document.querySelector("#preview-item-one-name").innerHTML) {
+            document.querySelector("#preview-item-one").style.display = "none"
             document.querySelector("#preview-item-one-name").innerHTML = "";
             choosenCentres.splice(i, 1);
             choosenCentresCodes.splice(i,1)
+
+            
         }
     }
 })
@@ -222,6 +233,7 @@ document.querySelector("#remove-btn-one").addEventListener("click", function () 
 document.querySelector("#remove-btn-two").addEventListener("click", function () {
     for (let i = 0; i < choosenCentres.length; i++) {
         if (choosenCentres[i] == document.querySelector("#preview-item-two-name").innerHTML) {
+            document.querySelector("#preview-item-two").style.display = "none"
             document.querySelector("#preview-item-two-name").innerHTML = "";
             choosenCentres.splice(i, 1);
             choosenCentresCodes.splice(i,1)
@@ -265,7 +277,7 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
                     }
 
                     //Distance
-                    let searchTerms = document.querySelector("#postal-code").value;
+                    let searchTerms = document.querySelector("#page-one-postal-code").value;
                     document.querySelector("#distance-compare-header").innerHTML = `Distance from postal code ${searchTerms}`
                     document.querySelectorAll(".distance-compare")[i].innerHTML = `${(L.latLng(currentCoordinates).distanceTo(x.latlng)).toFixed(0)} Metres`
                     
@@ -386,9 +398,14 @@ document.querySelector("#page-two-home-btn").addEventListener("click", function(
     }
 
     //show landing page
-    document.querySelector('#page-one').classList.add('show-page');
-    document.querySelector("#page-one-postal-code").value = ""
+    document.querySelector("#page-one").classList.add("show-page");
 
+    //Empty the values
+    document.querySelector("#page-one-postal-code").value = "";
+    document.querySelector("#preview-item-one-name").innerHTML = "";
+    document.querySelector("#preview-item-two-name").innerHTML = "";
+    choosenCentres = [];
+    choosenCentresCodes = [];
 })
 
 //Return to map page from comparison page when click on the close button
@@ -401,4 +418,5 @@ document.querySelector("#page-three-close-btn").addEventListener("click", functi
 
     // only show map page
     document.querySelector('#page-two').classList.add('show-page');
+    map.closePopup();
 })
