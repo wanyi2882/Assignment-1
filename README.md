@@ -35,3 +35,35 @@
 9. Once user has selected 2 pre-schools and is ready to compare them, he/she can then click on the 'Compare' button.
 
 10. Upon clicking on the 'Compare' button, it will bring the user to the comparison page which displays a table showcasing information on the pre-school such as opening hours, availability of services for the different age groups, any special dietary offered as well as the second languages offered.
+
+## Technologies Used
+
+1. HTML
+-  A markup language which provides the structure of a website to be displayed on web browsers.
+
+2. CSS (Cascading Style Sheet)
+-  A style sheet language used for describing the presentation of a document written in this HTML page.
+
+3. JavaScript
+- Programming language which creates dynamic behaviour to a webpage. It will execute actions and create interaction between the website and their users.
+
+4. Bootstrap
+- Framework for building responsive, mobile-first sites.
+
+5. Leaflet
+- Open-source JavaScript library for mobile-friendly interactive maps. 
+
+6. Geocoding API
+- From https://geocode.xyz/api which returns the latitude and longtitude of a given postal code in JSON format
+
+7. Axios
+- Promise based HTTP client for the browser
+
+8. Font Awesome
+- Library with icon set and toolkit for website 
+
+9. Google Fonts
+- Library which includes free and open source font families
+
+10. Csvtojson
+- CSV Parser which converts CSV files to JSON format
