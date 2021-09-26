@@ -24,8 +24,7 @@
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto+Slab&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Varela+Round&display=swap" rel="stylesheet">
 
   <!-- custom css -->
   <link href="style.css" rel="stylesheet" type="text/css" />
@@ -37,8 +36,12 @@
     <!-- Page 1 Landing page -->
     <div id="page-one" class="page main-image">
       <div class="overlay">
+        <div id="main-caption">
+          <h2>FIND A PRE-SCHOOL NEAR YOU!</h2>
+        </div>
+
         <div id="searchBar">
-          <div id="searchBarTag">Search for your nearest Childcare Centre by postal code</div>
+          <div id="searchBarTag">Search by postal code</div>
           <div id="searchBarContent">
             <input id="page-one-postal-code" type="text" placeholder="Enter Postal Code Here" />
             <div id="page-one-search-btn" class="search-btn" type="submit">Go</div>
@@ -52,19 +55,38 @@
 
       <!-- Search Bar and Filter Buttons -->
       <div id="page-two-bar">
-        <button id="page-two-home-btn" class="btn btn-primary">Home</button>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <a id="page-two-home-btn" class="navbar-brand">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="#"></a>
+                <a id="filter-spark-layer-btn" class="nav-link">Show Spark Certified Centres</a>
+                <a id="filter-within-100m-layer-btn" class="nav-link">Show Centres within 100m</a>
+                <a id="filter-within-500m-layer-btn" class="nav-link">Show Centres within 500m</a>
+                <a id="filter-within-1km-layer-btn" class="nav-link">Show Centres within 1Km</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- <button id="page-two-home-btn" class="btn btn-primary">Home</button>
         <button id="filter-spark-layer-btn" class="btn btn-secondary">Show Spark Certified Centres</button>
         <button id="filter-within-100m-layer-btn" class="btn btn-danger">Show Centres within 100m</button>
         <button id="filter-within-500m-layer-btn" class="btn btn-danger">Show Centres within 500m</button>
-        <button id="filter-within-1km-layer-btn" class="btn btn-danger">Show Centres within 1Km</button>
-        
+        <button id="filter-within-1km-layer-btn" class="btn btn-danger">Show Centres within 1Km</button> -->
+
 
       </div>
 
       <section>
         <!-- map div -->
 
-        <div id="map" class="custom-popup"></div>
+        <div id="map"></div>
 
         <!-- legend div -->
         <div id="legend-div"></div>

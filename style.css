@@ -33,10 +33,14 @@ position: absolute;
   height: 100vh;
   width: 100vw;
   background: rgba(0,0,0,0.3);
+}
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#main-caption{
+  font-family: 'Varela Round', sans-serif;
+  font-size: 10rem;
+  padding: 0.2em;
+  color: white;
+  text-align: center;
 }
 
 #searchBar{ 
@@ -44,11 +48,14 @@ position: absolute;
   background-color: rgba(255, 255, 255, 0.815);
   border-radius: 15px; 
   width: 80%;
+  margin: 1.5em;
 }
 
 #searchBarTag{
   padding: 5px;
   text-align: center;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 12pt;
 }
 
 #searchBarContent{
@@ -64,6 +71,7 @@ position: absolute;
   margin-right: 3px;
   font-size: 12px;
   border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #page-one-search-btn{
@@ -73,6 +81,7 @@ position: absolute;
   text-align: center;
   border-radius: 15px;
   font-size: 10px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #page-two{
@@ -191,15 +200,12 @@ section{
 
 
 @media screen and (min-width: 768px){
-  #page-one-search-btn, #page-one-postal-code{
-    font-size: medium;
-  }
+
+  
 
 }
   
   @media screen and (min-width: 1200px){
-    #page-one-search-btn, #page-one-postal-code{
-      font-size: large;
-    }
+
 
   }
