@@ -97,67 +97,138 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
 
     let isnum = /^\d+$/.test(searchTerms)
 
-    if (searchTerms.length !== 6 || isnum == false){
+    if (searchTerms.length !== 6 || isnum == false) {
         alert("Please enter a 6 digit postal code")
-    } else{
+    } else {
 
         let allPages = document.querySelectorAll('.page');
         for (let p of allPages) {
             p.classList.remove('show-page');
             p.classList.add('hidden-page');
         }
-    
+
         // only show map page
         document.querySelector('#page-two').classList.add('show-page');
-    
+
         //Search by postal code
         let response = await axios.get("https://geocode.xyz/" + searchTerms + "?json=1");
+        console.log(response.data)
         let currentLat = response.data.latt;
         let currentLng = response.data.longt;
         currentCoordinates = [currentLat, currentLng];
         map.flyTo(currentCoordinates, 17);
-    
+
         let searchResultsCurrentCoordinates = L.latLng(currentCoordinates);
-    
+
         let popup = L.popup();
         popup.setLatLng(currentCoordinates);
         popup.setContent(`YOU ARE HERE!`);
         popup.openOn(map);
-    
+
         let markerIcon = L.icon({
             iconUrl: '../images/parent-child-marker.jpeg',
             iconSize: [38, 38]
         })
-    
-    
+
+
         let marker = new L.marker(currentCoordinates, {
             draggable: 'true',
             icon: markerIcon
         });
-    
-        marker.on('dragend', function (event) {
+
+        marker.on('dragend', async function (event) {
+
+            distance100ClusterLayer.clearLayers();
+            distance500ClusterLayer.clearLayers();
+            distance1000ClusterLayer.clearLayers();
+
             let marker = event.target;
             position = marker.getLatLng();
             currentCoordinates = [position.lat, position.lng];
+
+            let response = await axios.get("https://geocode.xyz/" + currentCoordinates + "?json=1")
+            console.log(response.data)
+
             marker.setLatLng(new L.LatLng(position.lat, position.lng), {
                 draggable: 'true'
             });
+
             map.panTo(new L.LatLng(position.lat, position.lng))
             searchResultsCurrentCoordinates = new L.latLng(position.lat, position.lng);
-            console.log(searchResultsCurrentCoordinates)
+
+            let searchResults = await merge();
+
+            for (let x of searchResults) {
+
+                //popup content
+                let popupDiv = document.createElement("div");
+                popupDiv.innerHTML = `<h6> ${x.centreName} </h6> <br> 
+            Address: ${x.address} <br>
+            Spark Certified: ${x.sparkCertified} <br> 
+            <i class="fas fa-phone"></i> Contact Us @ ${x.contact} <br>
+    
+            `
+
+                let compareButton = document.createElement("button")
+                compareButton.className = "add-to-compare-btn"
+                compareButton.innerHTML = "Add to Compare"
+
+                L.DomEvent.on(compareButton, 'click', () => {
+                    if (choosenCentres.length < 1) {
+                        choosenCentres.push(x.centreName);
+                        choosenCentresCodes.push(x.centreCode);
+
+                        document.querySelector("#preview-item-one").style.display = "block";
+
+                        document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0];
+                    } else if (choosenCentres.length < 2) {
+                        choosenCentres.push(x.centreName);
+                        choosenCentresCodes.push(x.centreCode);
+
+                        document.querySelector("#preview-item-one").style.display = "block";
+
+                        document.querySelector("#preview-item-two").style.display = "block";
+
+                        document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0];
+                        document.querySelector("#preview-item-two-name").innerHTML = choosenCentres[1];
+                    } else {
+                        alert("You can only add a max of 2 centres")
+                    }
+                })
+
+                let popupContent = document.createElement("div")
+                popupContent.appendChild(popupDiv)
+                popupContent.appendChild(compareButton)
+
+
+                let popupOptions = {
+                    'minWidth': '500',
+                    'className': 'custom-popup'
+                }
+
+                //Distance markers
+                if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.1) {
+                    L.marker(x.latlng).addTo(distance100ClusterLayer).bindPopup(popupContent, popupOptions);
+                } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.5) {
+                    L.marker(x.latlng).addTo(distance500ClusterLayer).bindPopup(popupContent, popupOptions);
+                } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 1) {
+                    L.marker(x.latlng).addTo(distance1000ClusterLayer).bindPopup(popupContent, popupOptions);
+                }
+
+            }
+
         });
         map.addLayer(marker);
 
-        console.log(searchResultsCurrentCoordinates)
 
-    
-    
+
+
         //Call merge function
-    
+
         let searchResults = await merge();
-    
+
         for (let x of searchResults) {
-    
+
             //popup content
             let popupDiv = document.createElement("div");
             popupDiv.innerHTML = `<h6> ${x.centreName} </h6> <br> 
@@ -166,47 +237,47 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
             <i class="fas fa-phone"></i> Contact Us @ ${x.contact} <br>
     
             `
-    
+
             let compareButton = document.createElement("button")
             compareButton.className = "add-to-compare-btn"
             compareButton.innerHTML = "Add to Compare"
-    
+
             L.DomEvent.on(compareButton, 'click', () => {
                 if (choosenCentres.length < 1) {
                     choosenCentres.push(x.centreName);
                     choosenCentresCodes.push(x.centreCode);
-    
+
                     document.querySelector("#preview-item-one").style.display = "block";
-    
+
                     document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0];
                 } else if (choosenCentres.length < 2) {
                     choosenCentres.push(x.centreName);
                     choosenCentresCodes.push(x.centreCode);
-    
+
                     document.querySelector("#preview-item-one").style.display = "block";
-    
+
                     document.querySelector("#preview-item-two").style.display = "block";
-    
+
                     document.querySelector("#preview-item-one-name").innerHTML = choosenCentres[0];
                     document.querySelector("#preview-item-two-name").innerHTML = choosenCentres[1];
                 } else {
                     alert("You can only add a max of 2 centres")
                 }
             })
-    
+
             let popupContent = document.createElement("div")
             popupContent.appendChild(popupDiv)
             popupContent.appendChild(compareButton)
-    
-    
+
+
             let popupOptions = {
                 'minWidth': '500',
                 'className': 'custom-popup'
             }
-    
+
             //Add all Markers
             L.marker(x.latlng).addTo(baseClustersGroup).bindPopup(popupContent, popupOptions);
-    
+
             //Distance markers
             if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.1) {
                 L.marker(x.latlng).addTo(distance100ClusterLayer).bindPopup(popupContent, popupOptions);
@@ -215,14 +286,14 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
             } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 1) {
                 L.marker(x.latlng).addTo(distance1000ClusterLayer).bindPopup(popupContent, popupOptions);
             }
-    
+
             //Spark Markers
             if (x.sparkCertified == "Yes") {
                 let sparkIcon = L.icon({
                     iconUrl: '../images/spark-logo.jpeg',
                     iconSize: [38, 38]
                 })
-    
+
                 L.marker(x.latlng, {
                     icon: sparkIcon
                 }).addTo(sparkGroup).bindPopup(popupContent, popupOptions);
