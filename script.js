@@ -86,6 +86,7 @@ async function merge() {
     return mergedDataSet;
 }
 
+
 let currentCoordinates = []
 
 //Results function
@@ -125,18 +126,22 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
         popup.setContent(`YOU ARE HERE!`);
         popup.openOn(map);
 
+        // Draggable Marker
+
         let markerIcon = L.icon({
             iconUrl: '../images/parent-child-marker.jpeg',
             iconSize: [38, 38]
         })
-
 
         let marker = new L.marker(currentCoordinates, {
             draggable: 'true',
             icon: markerIcon
         });
 
+        //Marker on Dragend event
         marker.on('dragend', async function (event) {
+
+            //Clear existing markers in layer
 
             distance100ClusterLayer.clearLayers();
             distance500ClusterLayer.clearLayers();
@@ -145,6 +150,8 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
             let marker = event.target;
             position = marker.getLatLng();
             currentCoordinates = [position.lat, position.lng];
+
+            //Reverse geocode to get draggable marker address and postal code
 
             let response = await axios.get("https://geocode.xyz/" + currentCoordinates + "?json=1")
             console.log(response.data)
@@ -208,20 +215,43 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
 
                 //Distance markers
                 if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.1) {
-                    L.marker(x.latlng).addTo(distance100ClusterLayer).bindPopup(popupContent, popupOptions);
+                    let markerIcon = L.icon({
+                        iconUrl: '../images/100m-icon.png',
+                        iconSize: [38, 38]
+                    })
+            
+                    let marker = L.marker(x.latlng, {
+                        icon: markerIcon
+                    });
+                    marker.addTo(distance100ClusterLayer).bindPopup(popupContent, popupOptions);
+
                 } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.5) {
-                    L.marker(x.latlng).addTo(distance500ClusterLayer).bindPopup(popupContent, popupOptions);
+                    let markerIcon = L.icon({
+                        iconUrl: '../images/500m-icon.png',
+                        iconSize: [38, 38]
+                    })
+            
+                    let marker = L.marker(x.latlng, {
+                        icon: markerIcon
+                    });
+                    marker.addTo(distance500ClusterLayer).bindPopup(popupContent, popupOptions);
+
                 } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 1) {
-                    L.marker(x.latlng).addTo(distance1000ClusterLayer).bindPopup(popupContent, popupOptions);
+                    let markerIcon = L.icon({
+                        iconUrl: '../images/1km-icon.png',
+                        iconSize: [38, 38]
+                    })
+            
+                    let marker = L.marker(x.latlng, {
+                        icon: markerIcon
+                    });
+                    marker.addTo(distance1000ClusterLayer).bindPopup(popupContent, popupOptions);
                 }
 
             }
 
         });
         map.addLayer(marker);
-
-
-
 
         //Call merge function
 
@@ -494,8 +524,10 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
                     } else if (x.foodOffered.includes("from Non-Halal Sources")) {
                         document.querySelectorAll(".halal-compare")[i].innerHTML = `No Pork No Lard (from Non-Halal Sources)`
                     } else {
-                        document.querySelectorAll(".halal-compare")[i].innerHTML = `<i class="far fa-times-circle"></i>`
+                        document.querySelectorAll(".halal-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on dietary offered`
                     }
+
+                    console.log(x.foodOffered)
 
                     //Vegeterian
                     if (x.foodOffered.includes("Vegetarian")) {
