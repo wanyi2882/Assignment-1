@@ -33,8 +33,15 @@
   box-shadow: none;
 }
 
+#filter-all-markers-btn{
+  background-color: white;
+  margin: 10px;
+  border: 3px solid black;
+  color: black;
+}
+
 #filter-spark-layer-btn{
- background-color: white;
+ background: linear-gradient(to right, #FF3C38, #FFF275, #46F146, #46EBF1);
  margin: 10px;
  border: 3px solid black;
  color: black;

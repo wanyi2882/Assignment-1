@@ -310,11 +310,22 @@ let overlayLayer = {
 L.control.layers(baseLayers, overlayLayer).addTo(map)
 
 //Buttons for layer control
+
+document.querySelector("#filter-all-markers-btn").addEventListener("click", function () {
+    if (map.hasLayer(baseClustersGroup)) {
+        map.removeLayer(baseClustersGroup);
+    } else {
+        map.removeLayer(sparkGroup);
+        map.addLayer(baseClustersGroup);
+    }
+})
+
 document.querySelector("#filter-spark-layer-btn").addEventListener("click", function () {
     if (map.hasLayer(sparkGroup)) {
         map.removeLayer(sparkGroup);
     } else {
         map.addLayer(sparkGroup);
+        map.removeLayer(baseClustersGroup);
     }
 })
 
