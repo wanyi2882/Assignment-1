@@ -209,7 +209,8 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
 
 
                 let popupOptions = {
-                    'minWidth': '500',
+                    'minWidth': '0',
+                    'maxWidth': '200',
                     'className': 'custom-popup'
                 }
 
@@ -301,7 +302,8 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
 
 
             let popupOptions = {
-                'minWidth': '500',
+                // 'minWidth': '0',
+                // 'maxWidth': '250',
                 'className': 'custom-popup'
             }
 
@@ -310,11 +312,35 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
 
             //Distance markers
             if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.1) {
-                L.marker(x.latlng).addTo(distance100ClusterLayer).bindPopup(popupContent, popupOptions);
+                let markerIcon = L.icon({
+                    iconUrl: '../images/500m-icon.png',
+                    iconSize: [38, 38]
+                })
+        
+                let marker = L.marker(x.latlng, {
+                    icon: markerIcon
+                });
+                marker.addTo(distance100ClusterLayer).bindPopup(popupContent, popupOptions);
             } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.5) {
-                L.marker(x.latlng).addTo(distance500ClusterLayer).bindPopup(popupContent, popupOptions);
+                let markerIcon = L.icon({
+                    iconUrl: '../images/500m-icon.png',
+                    iconSize: [38, 38]
+                })
+        
+                let marker = L.marker(x.latlng, {
+                    icon: markerIcon
+                });
+                marker.addTo(distance500ClusterLayer).bindPopup(popupContent, popupOptions);
             } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 1) {
-                L.marker(x.latlng).addTo(distance1000ClusterLayer).bindPopup(popupContent, popupOptions);
+                let markerIcon = L.icon({
+                    iconUrl: '../images/500m-icon.png',
+                    iconSize: [38, 38]
+                })
+        
+                let marker = L.marker(x.latlng, {
+                    icon: markerIcon
+                });
+                marker.addTo(distance1000ClusterLayer).bindPopup(popupContent, popupOptions);
             }
 
             //Spark Markers

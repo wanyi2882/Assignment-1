@@ -1,0 +1,103 @@
+#page-two {
+  width: 100vw;
+  height: 100vh;
+}
+
+#map {
+  height: 50vh;
+  width: 100vw;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background: #6C8EAD;
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 0px;
+}
+
+.custom-popup .leaflet-popup-content-wrapper a {
+  color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-popup .leaflet-popup-tip-container {
+  width: 30px;
+  height: 15px;
+}
+
+.custom-popup .leaflet-popup-tip {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+#legend-div {
+  height: 10vh;
+  width: 100vw;
+  background-color: aqua;
+  padding: 15px;
+}
+
+#preview-div {
+  border: 1px solid black;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 30px;
+
+  font-family: 'Varela Round', sans-serif;
+  font-size: 2em;
+}
+
+#preview-items-div {
+  display: block;
+}
+
+#preview-item-one,
+#preview-item-two {
+  display: none;
+  width: 70%;
+}
+
+#preview-item-one-name,
+#preview-item-two-name {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.remove-btn {
+  position: absolute;
+  right: -5px;
+  top: -10px;
+  padding: 0;
+}
+
+.preview-card {
+  margin: 20px;
+  width: 12rem;
+  height: 80px;
+}
+
+.card-name {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+}
+
+@media screen and (min-width: 576px){
+  #preview-items-div{
+    display: flex;
+  }
+
+  section{
+    display: flex;
+  }
+
+  #map{
+    width: 90vw;
+  }
+
+  #legend-div{
+    width: 10vw;
+  }
+
+}

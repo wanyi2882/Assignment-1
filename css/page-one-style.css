@@ -1,0 +1,62 @@
+.main-image{
+    background-image: url("../images/main-image.jpeg");
+    height: 100vh;
+    width:100vw;
+    background-size:cover;
+    background-position:center;
+  }
+  
+  .overlay{
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0,0,0,0.3);
+  }
+  
+  #main-caption{
+    font-family: 'Varela Round', sans-serif;
+    font-size: 10rem;
+    padding: 0.2em;
+    color: white;
+    text-align: center;
+  }
+  
+  #searchBar{ 
+    color: #F46036;
+    background-color: rgba(255, 255, 255, 0.815);
+    border-radius: 15px; 
+    width: 80%;
+    margin: 1.5em;
+  }
+  
+  #searchBarTag{
+    padding: 5px;
+    text-align: center;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 12pt;
+  }
+  
+  #searchBarContent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    padding: 10px;
+  }
+  
+  #page-one-postal-code{
+    width: 80%;
+    margin-right: 3px;
+    font-size: 12px;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  #page-one-search-btn{
+    width: 20%;
+    border: 1px black solid;
+    word-wrap: break-word;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 10px;
+    font-family: 'Montserrat', sans-serif;
+  }
