@@ -83,10 +83,14 @@ Website helps to zoom into a specified location's area and display the available
 
 ### 3. Comprehensive Feature List 
 1. A search bar where the user can enter their postal code to search for pre-schools near the mentioned postal code
-2. User can filter to see pre-schools which aare 'SPARK Certified' on the map
+
+2. User can filter to see pre-schools which are 'SPARK Certified' on the map
+
 3. User can also filter to see the pre-schools which are within 100 metres, 500metres and 1 Kilometre distance from the searched postal code on the map
+
 4. A draggable marker which can bring user to another location on the map
-5. User can do a comparison between two pre-schools
+
+5. User can do a comparison between two pre-schools by clicking on the "Add to Compare" button in the popup
 
 ### 4. Structure of Website
 
@@ -150,14 +154,18 @@ Website helps to zoom into a specified location's area and display the available
 |-------------|:---------------------:|----------:|----------------:|
 |             |Prerequisite: The user is at landing page.           |    
 | 01.| Search for pre-school by postal code| 1) User enters postal code as "680213" <br><br> 2) User enters postal code as "68021" (short of one 1 digit) <br><br> 3) User enters postal code as "abc123" (Postal code containing numbers)|1) Goes to page displaying map <br><br> 2) Alert user to key a 6 digit postal code <br><br> 3) Alert usert to key a 6 digit postal code|
-||Prerequisite: User sucessfully keys in postal code and arrives at page displaying map|||    
-| 02.| Adding pre-school for comparison| 1) User clicks on the individual popups which will have the "Add to Compare" button. User selects one popup and clicks the "Add to Compare" button <br><br> 2) User tries to add more than 2 pre-schools for comparison| 1) The pre-school gets added to comparison preview table at the bottom of the page <br><br> 2) Alert user that they can only add a maximum of 2 pre-schools |
-|03.| Comparing pre-school | 1) User has added 2 pre-schools to the comparison preview table (Which will be displayed at the bottom of the page) and clicks "Start Compare" button <br><br> 2) User only selected 1 pre-school and hits the the "Start Compare" button| 1) Brings user to the comparison table page comparing between the 2 selected pre-schools <br><br> 2) Alert User to add in at least 2 pre-schools for comparison |
+||Prerequisite: User sucessfully keys in postal code and arrives at page displaying map|||  
+|02.| Draggable Marker| 1) User clicks and drags "draggable marker"||  
+| 03.| Adding pre-school for comparison| 1) User clicks on the individual popups which will have the "Add to Compare" button. User selects one popup and clicks the "Add to Compare" button <br><br> 2) User tries to add more than 2 pre-schools for comparison| 1) The pre-school gets added to comparison preview table at the bottom of the page <br><br> 2) Alert user that they can only add a maximum of 2 pre-schools |
+|04.| Comparing pre-school | 1) User has added 2 pre-schools to the comparison preview table (Which will be displayed at the bottom of the page) and clicks "Start Compare" button <br><br> 2) User only selected 1 pre-school and hits the the "Start Compare" button| 1) Brings user to the comparison table page comparing between the 2 selected pre-schools <br><br> 2) Alert User to add in at least 2 pre-schools for comparison |
+
+
 
 
 ### 7. Future Features Implementation / Bugs
 1. A legend to show the various markers and the draggable marker
 2. Allow user to be able to perform a search function on the postal code on the 2nd page
-2. More information on each pre-school (A CSV file on the various fees of each pre-school is available however the file is too big for implementation)
+3. More information on each pre-school (A CSV file on the various fees of each pre-school is available however the file is too big for implementation)
+4. Geocode API does not respond sometimes or may need a few refreshes before the URL can work
 
 ### 8. Credits
