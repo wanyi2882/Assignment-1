@@ -67,13 +67,14 @@ Website helps to zoom into a specified location's area and display the available
 * Will be discussed under 4. Structure of Website.
 
 #### Skeleton
-* Refer to Github attachment.
+![Surface Colours](./images/skeleton.png)
 
 #### Surface 
 * Colors: Bright sunny colours to illustrate kids and pre-schools
 ![Surface Colours](./images/colors.png)
 
-* Typography: 
+* Typography: Google Fonts: 'Montserrat', sans-serif and 'Varela Round', sans-serif<br>
+Relax tone to the website therefore a less formal font style was applied.
 
 * Font size: Generally normal font size as catered for adults (parents)
 
