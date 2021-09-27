@@ -91,9 +91,6 @@
 
         <div id="map"></div>
 
-        <!-- legend div -->
-        <div id="legend-div"></div>
-
       </section>
 
 
@@ -115,7 +112,45 @@
             </div>
           </div>
 
-          <div class="btn" id="compare-btn">Start Compare</div>
+          <div id="compare-btn" class="btn">Start Compare</div>
+        </div>
+      </div>
+
+      <!-- dropdown of legend -->
+      <div id="legend-div" class="btn-group dropup">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropup
+        </button>
+        <div class="dropdown-menu">
+          <div class="legend-inner-div">
+            <div id="legend-icon-current" class="legend-icon"></div>
+            Current Location
+          </div>
+
+          <div class="legend-inner-div">
+            <div id="legend-icon-all" class="legend-icon"></div>
+            Pre-school
+          </div>
+
+          <div class="legend-inner-div">
+            <div id="legend-icon-spark" class="legend-icon"></div>
+            Spark Certified Pre-school
+          </div>
+
+          <div class="legend-inner-div">
+            <div id="legend-icon-100m" class="legend-icon"></div>
+            Within 100 metres
+          </div>
+
+          <div class="legend-inner-div">
+            <div id="legend-icon-500m" class="legend-icon"></div>
+            Between 100 - 500 metres
+          </div>
+
+          <div class="legend-inner-div">
+            <div id="legend-icon-1km" class="legend-icon"></div>
+            Between 500m - 1Km
+          </div>        
         </div>
       </div>
     </div>

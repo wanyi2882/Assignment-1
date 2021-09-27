@@ -1,14 +1,14 @@
 # Pre-School Locator
 
->Noticing more people of my age becoming parents, and as they look for Infant Care or Pre-Schools near their homes or workplaces, this idea bloomed.
+* Noticing more people of my age becoming parents, and as they look for Infant Care or Pre-Schools near their homes or workplaces, this idea bloomed.
 
->This website consolidates all the pre-schools available in Singapore as provide by the data.gov.sg. 
+* This website consolidates all the pre-schools available in Singapore as provide by the data.gov.sg. 
 
->The purpose of this webpage is to help parents look for a pre-school near a specified location.
+* The purpose of this webpage is to help parents look for a pre-school near a specified location.
 
->Through this webiste, parents can easily locate childcare centres near a specified postal code, filter centres according to distance and do a comparison between two centres.
+* Through this webiste, parents can easily locate childcare centres near a specified postal code, filter centres according to distance and do a comparison between two centres.
 
-> URL: https://5506-azure-emu-to0ccdiz.ws-us18.gitpod.io/index.html
+* URL: https://wanyi2882.github.io/pre-school-locator/
 
 ## Project Complexity Matrix
 

@@ -20,34 +20,3 @@ transform: translateX(0);
 .page{
 position: absolute;
 }
-
-@media screen and (min-width: 576px){
-  #preview-items-div{
-    display: flex;
-  }
-
-  section{
-    display: flex;
-  }
-
-  #map{
-    width: 90vw;
-  }
-
-  #legend-div{
-    width: 10vw;
-  }
-
-}
-
-
-@media screen and (min-width: 768px){
-
-  
-
-}
-  
-  @media screen and (min-width: 1200px){
-
-
-  }

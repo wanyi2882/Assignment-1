@@ -5,7 +5,7 @@
 
 #map {
   height: 50vh;
-  width: 100vw;
+  width: 90vw;
   border: 1px solid black;
   margin: 10px;
 }
@@ -68,21 +68,56 @@
   color: white;
 }
 
-#legend-div {
-  height: 10vh;
-  width: 100vw;
-  background-color: aqua;
-  padding: 15px;
+#legend-div{
+  position: absolute;
+  right: 0;
+}
+
+#legend-icon-current{
+  background-image: url("../images/parent-child-marker.jpeg");
+}
+
+#legend-icon-all{
+  background-image: url("../images/main-01-icon.png");
+}
+
+#legend-icon-spark{
+  background-image: url("../images/spark-logo.jpeg");
+}
+
+#legend-icon-100m{
+  background-image: url("../images/100m-icon.png");
+}
+
+#legend-icon-500m{
+  background-image: url("../images/500m-icon.png");
+}
+
+#legend-icon-1km{
+  background-image: url("../images/1km-icon.png");
+}
+
+.legend-icon{
+  background-size:cover;
+  background-position:center;
+  height: 100px;
+  width: 100px;
+}
+
+.legend-inner-div{
+font-size: 0.7em;
+margin: 5px;
 }
 
 #preview-div {
+  width: 90vw;
   border: 1px solid black;
   margin: 20px;
-  padding: 20px;
+  padding: 10px;
   border-radius: 30px;
 
   font-family: 'Varela Round', sans-serif;
-  font-size: 2em;
+  font-size: 1em;
 }
 
 #preview-items-div {
@@ -95,8 +130,7 @@
   width: 70%;
 }
 
-#preview-item-one-name,
-#preview-item-two-name {
+#preview-item-one-name, #preview-item-two-name {
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -114,8 +148,17 @@
 }
 
 .card-name {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 12px;
+}
+
+#compare-btn{
+  background-color: #A23E48;
+  margin: 10px;
+  border: 3px solid black;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+
 }
 
 @media screen and (min-width: 576px){
@@ -123,16 +166,12 @@
     display: flex;
   }
 
-  section{
+  /* section{
     display: flex;
   }
 
   #map{
-    width: 90vw;
-  }
-
-  #legend-div{
-    width: 10vw;
-  }
+    width: 100vw;
+  } */
 
 }
