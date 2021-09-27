@@ -41,8 +41,10 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
         //Popup for first search coordinates
         let popup = L.popup();
         popup.setLatLng(currentCoordinates);
-        popup.setContent(`YOU ARE HERE!`);
+        popup.setContent(`YOU ARE HERE! <br> YOU CAN DRAG ME ON THE MAP!`);
         popup.openOn(map);
+
+
 
         // Drag Marker
         let markerIcon = L.icon({
@@ -89,10 +91,11 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
                 //popup content
                 let popupDiv = document.createElement("div");
                 popupDiv.innerHTML = `<h6> ${x.centreName} </h6> <br> 
-            Address: ${x.address} <br>
-            Spark Certified: ${x.sparkCertified} <br> 
-            <i class="fas fa-phone"></i> Contact Us @ ${x.contact} <br>
-            `
+                ADDRESS: ${x.address} <br>
+                SPARK CERTIFIED: ${x.sparkCertified} <br> 
+                CONTACT US @ ${x.contact} <br>
+                EMAIL ADDRESS: ${x.email} <br>
+                WEBSITE: ${x.website}`
 
                 let compareButton = document.createElement("button")
                 compareButton.className = "add-to-compare-btn"
@@ -181,11 +184,11 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
             //popup content
             let popupDiv = document.createElement("div");
             popupDiv.innerHTML = `<h6> ${x.centreName} </h6> <br> 
-            Address: ${x.address} <br>
-            Spark Certified: ${x.sparkCertified} <br> 
-            <i class="fas fa-phone"></i> Contact Us @ ${x.contact} <br>
-    
-            `
+            ADDRESS: ${x.address} <br>
+            SPARK CERTIFIED: ${x.sparkCertified} <br> 
+            CONTACT US @ ${x.contact} <br>
+            EMAIL ADDRESS: ${x.email} <br>
+            WEBSITE: ${x.website}`
 
             let compareButton = document.createElement("button")
             compareButton.className = "add-to-compare-btn"
@@ -410,7 +413,7 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
                 if (choosenCentresCodes[i] == x.centreCode) {
 
                     //Centre name
-                    document.querySelectorAll(".name-compare")[i].innerHTML = x.centreName
+                    document.querySelectorAll(".name-compare")[i].innerHTML = `${x.centreName} <br> ${x.address}`
 
                     //Spark certification
                     if (x.sparkCertified == "Yes") {

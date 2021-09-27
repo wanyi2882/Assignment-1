@@ -7,3 +7,27 @@
   width: 70vw;
   height: 90vh;
 }
+
+.name-compare {
+  color: #A23E48;
+}
+
+.centre-row {
+  background-color: #A23E48 !important;
+  color: white;
+}
+
+.vacancy-row {
+  background-color: #FF3C38 !important;
+  color: white;
+}
+
+.diet-row {
+  background-color: #FF8C42 !important;
+  color: white;
+}
+
+.lang-row {
+  background-color: #FFF275 !important;
+  color: black;
+}

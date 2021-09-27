@@ -8,7 +8,6 @@ width: 100vw;
 }
 
 .hidden-page {
-  /* transition: transform 1s; */
   transform: translateX(-100%);
 }
 
