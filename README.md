@@ -80,7 +80,7 @@ Relax tone to the website therefore a less formal font style was applied.
 
 * Layout: Simple layout to achieve 
 
-* Strategy for achieving mobile responsiveness: Website was built from mobile size and eventually for Ipad and Laptop display
+* Strategy for achieving mobile responsiveness: Website was built from mobile size (XS) and eventually for Ipad and Laptop display
 
 ### 3. Comprehensive Feature List 
 1. A search bar where the user can enter their postal code to search for pre-schools near the mentioned postal code
