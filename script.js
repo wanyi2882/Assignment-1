@@ -1,133 +1,50 @@
-//functions
-
-//Latlng function and array of centreCodeWithCoordinates
-async function getLatLng() {
-    //load locations.geojson
-    let response = await axios.get('locations.geojson');
-    let centreCodeWithCoordinates = []
-    let features = response.data.features;
-
-    for (let feature of features) {
-        let lat = feature.geometry.coordinates[1];
-        let lng = feature.geometry.coordinates[0];
-        let locations = [lat, lng];
-
-        let popupDiv = document.createElement('div')
-        popupDiv.innerHTML = feature.properties.Description;
-        let centreCode = popupDiv.querySelectorAll('td')[1].innerHTML;
-
-        centreCodeWithCoordinates.push({
-            'centreCode': centreCode,
-            'latlng': locations,
-        })
-    }
-    return centreCodeWithCoordinates
-}
-
-//Array of centreInformation
-async function centreInformation() {
-    //load CSV data on centre information
-    let rawCentreData = await loadCentresData();
-    let centreCodeWithInformation = [];
-
-    for (let csvCentreData of rawCentreData) {
-        centreCode = csvCentreData.centre_code;
-        centreName = csvCentreData.centre_name.toUpperCase();
-        sparkCertified = csvCentreData.spark_certified;
-        centreAddress = csvCentreData.centre_address.toUpperCase();
-        contact = csvCentreData.centre_contact_no;
-        email = csvCentreData.centre_email_address;
-        website = csvCentreData.centre_website;
-        infantVacancy = csvCentreData.infant_vacancy;
-        playGroupVacancy = csvCentreData.pg_vacancy;
-        n1Vacancy = csvCentreData.n1_vacancy;
-        n2Vacancy = csvCentreData.n2_vacancy;
-        k1Vacancy = csvCentreData.k1_vacancy;
-        k2Vacancy = csvCentreData.k2_vacancy;
-        foodOffered = csvCentreData.food_offered;
-        secondLanguages = csvCentreData.second_languages_offered;
-        weekdayHours = csvCentreData.weekday_full_day;
-        saturdayHours = csvCentreData.saturday;
-
-        centreCodeWithInformation.push({
-            'centreCode': centreCode,
-            'centreName': centreName,
-            'sparkCertified': sparkCertified,
-            'address': centreAddress,
-            'contact': contact,
-            'email': email,
-            'website': website,
-            'infantVacancy': infantVacancy,
-            'playGroupVacancy': playGroupVacancy,
-            'n1Vacancy': n1Vacancy,
-            'n2Vacancy': n2Vacancy,
-            'k1Vacancy': k1Vacancy,
-            'k2Vacancy': k2Vacancy,
-            'foodOffered': foodOffered,
-            'weekdayHours': weekdayHours,
-            'saturdayHours': saturdayHours,
-            'secondLanguages': secondLanguages
-        })
-    }
-    return centreCodeWithInformation;
-}
-
-//merge two data set
-async function merge() {
-    let centreCodeWithCoordinates = await getLatLng();
-    let centreCodeWithInformation = await centreInformation();
-    let mergedDataSet = [];
-    for (i = 0; i < centreCodeWithCoordinates.length; i++) {
-        mergedDataSet.push({
-            ...centreCodeWithCoordinates[i],
-            ...(centreCodeWithInformation.find((itemInner) => itemInner.centreCode === centreCodeWithCoordinates[i].centreCode))
-        })
-    }
-    return mergedDataSet;
-}
-
-
+//Set coordinates of Draggable Marker
 let currentCoordinates = []
 
-//Results function
+//Search button function which shows the map page
 document.querySelector("#page-one-search-btn").addEventListener('click', async function () {
 
-    //Ensure user keys in a 6 digit postal code
+    //User keys in a 6 digit postal code
 
     let searchTerms = document.querySelector("#page-one-postal-code").value;
 
     let isnum = /^\d+$/.test(searchTerms)
 
     if (searchTerms.length !== 6 || isnum == false) {
+        //If user does not key in a 6 digit postal code
         alert("Please enter a 6 digit postal code")
     } else {
-
+        //User enters 6 digit postal code
         let allPages = document.querySelectorAll('.page');
         for (let p of allPages) {
             p.classList.remove('show-page');
             p.classList.add('hidden-page');
         }
 
-        // only show map page
+        //Show page two
         document.querySelector('#page-two').classList.add('show-page');
 
         //Search by postal code
         let response = await axios.get("https://geocode.xyz/" + searchTerms + "?json=1");
-        console.log(response.data)
         let currentLat = response.data.latt;
         let currentLng = response.data.longt;
         currentCoordinates = [currentLat, currentLng];
         map.flyTo(currentCoordinates, 17);
 
+        //Add location to the page 3 comparison page
+        document.querySelector("#distance-compare-header").innerHTML = `
+        Distance from ${response.data.standard.addresst} Singapore ${response.data.standard.postal}`
+
+        //Set leaflet lat and lng of the drag marker
         let searchResultsCurrentCoordinates = L.latLng(currentCoordinates);
 
+        //Popup for first search coordinates
         let popup = L.popup();
         popup.setLatLng(currentCoordinates);
         popup.setContent(`YOU ARE HERE!`);
         popup.openOn(map);
 
-        // Draggable Marker
-
+        // Drag Marker
         let markerIcon = L.icon({
             iconUrl: '../images/parent-child-marker.jpeg',
             iconSize: [38, 38]
@@ -142,19 +59,21 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
         marker.on('dragend', async function (event) {
 
             //Clear existing markers in layer
-
             distance100ClusterLayer.clearLayers();
             distance500ClusterLayer.clearLayers();
             distance1000ClusterLayer.clearLayers();
 
+            //Set new lat and lng when drag marker is dragged to a new position
             let marker = event.target;
             position = marker.getLatLng();
             currentCoordinates = [position.lat, position.lng];
 
             //Reverse geocode to get draggable marker address and postal code
+            let response = await axios.get("https://geocode.xyz/" + currentCoordinates + "?json=1");
 
-            let response = await axios.get("https://geocode.xyz/" + currentCoordinates + "?json=1")
-            console.log(response.data)
+            //update location to the page 3 comparison page
+            document.querySelector("#distance-compare-header").innerHTML = `
+            Distance from ${response.data.staddress} Singapore ${response.data.postal}`
 
             marker.setLatLng(new L.LatLng(position.lat, position.lng), {
                 draggable: 'true'
@@ -173,7 +92,6 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
             Address: ${x.address} <br>
             Spark Certified: ${x.sparkCertified} <br> 
             <i class="fas fa-phone"></i> Contact Us @ ${x.contact} <br>
-    
             `
 
                 let compareButton = document.createElement("button")
@@ -218,9 +136,9 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
                 if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.1) {
                     let markerIcon = L.icon({
                         iconUrl: '../images/100m-icon.png',
-                        iconSize: [38, 38]
+                        iconSize: [180, 180]
                     })
-            
+
                     let marker = L.marker(x.latlng, {
                         icon: markerIcon
                     });
@@ -229,9 +147,9 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
                 } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.5) {
                     let markerIcon = L.icon({
                         iconUrl: '../images/500m-icon.png',
-                        iconSize: [38, 38]
+                        iconSize: [180, 180]
                     })
-            
+
                     let marker = L.marker(x.latlng, {
                         icon: markerIcon
                     });
@@ -240,9 +158,9 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
                 } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 1) {
                     let markerIcon = L.icon({
                         iconUrl: '../images/1km-icon.png',
-                        iconSize: [38, 38]
+                        iconSize: [180, 180]
                     })
-            
+
                     let marker = L.marker(x.latlng, {
                         icon: markerIcon
                     });
@@ -308,15 +226,24 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
             }
 
             //Add all Markers
-            L.marker(x.latlng).addTo(baseClustersGroup).bindPopup(popupContent, popupOptions);
+            let allMarkerIcon = L.icon({
+                iconUrl: '../images/main-01-icon.png',
+                iconSize: [150, 150]
+            })
+
+            let allMarkers = L.marker(x.latlng, {
+                icon: allMarkerIcon
+            });
+
+            allMarkers.addTo(baseClustersGroup).bindPopup(popupContent, popupOptions);
 
             //Distance markers
             if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.1) {
                 let markerIcon = L.icon({
-                    iconUrl: '../images/500m-icon.png',
-                    iconSize: [38, 38]
+                    iconUrl: '../images/100m-icon.png',
+                    iconSize: [180, 180]
                 })
-        
+
                 let marker = L.marker(x.latlng, {
                     icon: markerIcon
                 });
@@ -324,19 +251,19 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
             } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 0.5) {
                 let markerIcon = L.icon({
                     iconUrl: '../images/500m-icon.png',
-                    iconSize: [38, 38]
+                    iconSize: [180, 180]
                 })
-        
+
                 let marker = L.marker(x.latlng, {
                     icon: markerIcon
                 });
                 marker.addTo(distance500ClusterLayer).bindPopup(popupContent, popupOptions);
             } else if (searchResultsCurrentCoordinates.distanceTo(x.latlng) / 1000 < 1) {
                 let markerIcon = L.icon({
-                    iconUrl: '../images/500m-icon.png',
-                    iconSize: [38, 38]
+                    iconUrl: '../images/1km-icon.png',
+                    iconSize: [180, 180]
                 })
-        
+
                 let marker = L.marker(x.latlng, {
                     icon: markerIcon
                 });
@@ -347,7 +274,7 @@ document.querySelector("#page-one-search-btn").addEventListener('click', async f
             if (x.sparkCertified == "Yes") {
                 let sparkIcon = L.icon({
                     iconUrl: '../images/spark-logo.jpeg',
-                    iconSize: [38, 38]
+                    iconSize: [35, 35]
                 })
 
                 L.marker(x.latlng, {
@@ -370,11 +297,11 @@ baseClustersGroup.addTo(map);
 
 //create map controls
 let baseLayers = {
+    'All Centres': baseClustersGroup,
     'SPARK Certified': sparkGroup
 }
 
 let overlayLayer = {
-    'All Centres': baseClustersGroup,
     'Within 100m': distance100ClusterLayer,
     'From 100m - 500m': distance500ClusterLayer,
     'From 500m - 1Km': distance1000ClusterLayer
@@ -483,7 +410,6 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
 
                     //Distance
                     let searchTerms = document.querySelector("#page-one-postal-code").value;
-                    document.querySelector("#distance-compare-header").innerHTML = `Distance from postal code ${searchTerms}`
                     document.querySelectorAll(".distance-compare")[i].innerHTML = `${(L.latLng(currentCoordinates).distanceTo(x.latlng)).toFixed(0)} Metres`
 
                     //Operating Hours
@@ -552,8 +478,6 @@ document.querySelector("#compare-btn").addEventListener("click", async function 
                     } else {
                         document.querySelectorAll(".halal-compare")[i].innerHTML = `Please contact the centre at ${x.contact} for more information on dietary offered`
                     }
-
-                    console.log(x.foodOffered)
 
                     //Vegeterian
                     if (x.foodOffered.includes("Vegetarian")) {
