@@ -155,7 +155,7 @@ Website helps to zoom into a specified location's area and display the available
 |             |Prerequisite: The user is at landing page.           |    
 | 01.| Search for pre-school by postal code| 1) User enters postal code as "680213" <br><br> 2) User enters postal code as "68021" (short of one 1 digit) <br><br> 3) User enters postal code as "abc123" (Postal code containing numbers)|1) Goes to page displaying map <br><br> 2) Alert user to key a 6 digit postal code <br><br> 3) Alert usert to key a 6 digit postal code|
 ||Prerequisite: User sucessfully keys in postal code and arrives at page displaying map|||  
-|02.| Draggable Marker| 1) User clicks and drags "draggable marker"||  
+|02.| Draggable Marker| 1) User clicks and drags "draggable marker"| "draggable marker" will move to new position on the map. Distance markers will also be updated according to the new position|  
 | 03.| Adding pre-school for comparison| 1) User clicks on the individual popups which will have the "Add to Compare" button. User selects one popup and clicks the "Add to Compare" button <br><br> 2) User tries to add more than 2 pre-schools for comparison| 1) The pre-school gets added to comparison preview table at the bottom of the page <br><br> 2) Alert user that they can only add a maximum of 2 pre-schools |
 |04.| Comparing pre-school | 1) User has added 2 pre-schools to the comparison preview table (Which will be displayed at the bottom of the page) and clicks "Start Compare" button <br><br> 2) User only selected 1 pre-school and hits the the "Start Compare" button| 1) Brings user to the comparison table page comparing between the 2 selected pre-schools <br><br> 2) Alert User to add in at least 2 pre-schools for comparison |
 
@@ -169,3 +169,6 @@ Website helps to zoom into a specified location's area and display the available
 4. Geocode API does not respond sometimes or may need a few refreshes before the URL can work
 
 ### 8. Credits
+
+1. Landing page background image from https://www.newlife.org.sg/
+
