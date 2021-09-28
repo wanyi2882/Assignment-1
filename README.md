@@ -33,7 +33,7 @@
 * Provide readily updated information on each pre-school to users
 
 #### 1d. Deployed URL
-* https://wanyi2882.github.io/pre-school-locator/
+* https://nervous-joliot-1bf4c0.netlify.app/
 
 
 ### 2. UX/UI 
